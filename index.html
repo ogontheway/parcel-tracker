@@ -51,7 +51,7 @@
                     <rect x="40" y="55" width="20" height="15" fill="#fefae0" opacity="0.8"/>
                 </svg>
                 
-                <!-- Updated to Pending Clock Icon (Amber Background) -->
+                <!-- Pending Clock Icon -->
                 <div class="absolute top-0 right-0 bg-amber-500 rounded-full p-1 border-2 border-white shadow-sm">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -68,7 +68,6 @@
             <form id="trackingForm" class="w-full" onsubmit="handleTrack(event)">
                 <label class="block text-gray-900 font-medium mb-3 text-[15px]">Your tracking code</label>
                 
-                <!-- Updated Placeholder (Removed comma) -->
                 <input 
                     type="text" 
                     id="trackingInput" 
@@ -79,7 +78,8 @@
                 
                 <button 
                     type="submit"
-                    class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(13,148,136,0.39)]"
+                    id="trackBtn"
+                    class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                     Track your item
                 </button>
@@ -123,54 +123,61 @@
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-        // 1. The default hardcoded data
-        const baseTrackingDatabase = {
-            "IPS772401": {
-                status: "In Transit",
-                destination: { location: "New York, NY, US", estimatedDate: "Nov 13, 2024" },
-                events: [
-                    { location: "Los Angeles, CA, US", time: "Nov 01, 9:15am", message: "Order Placed" },
-                    { location: "Los Angeles, CA, US", time: "Nov 02, 3:30pm", message: "Order Shipped" },
-                    { location: "Phoenix, AZ, US", time: "Nov 04, 6:20am", message: "Arrived at Regional Hub" },
-                    { location: "Dallas, TX, US", time: "Nov 07, 11:55pm", message: "In Transit" },
-                    { location: "Columbus, OH, US", time: "Nov 11, 4:15am", message: "Departed Sorting Center" }
-                ]
-            },
-            "IPS988231": {
-                status: "Delivered",
-                destination: { location: "Seattle, WA, US", estimatedDate: "Dec 28, 2024", actualDate: "Dec 27, 2024" },
-                events: [
-                    { location: "US", time: "Dec 20, 10:00am", message: "Order Placed" },
-                    { location: "Miami, FL, US", time: "Dec 21, 2:30pm", message: "Order Shipped" },
-                    { location: "Seattle, WA, US", time: "Dec 27, 10:15am", message: "Delivered, Front Door" }
-                ]
-            }
-        };
-
-        // 2. Load custom data from CMS (Local Storage)
-        let localData = {};
-        try {
-            const stored = localStorage.getItem('ips_custom_database');
-            if (stored) localData = JSON.parse(stored);
-        } catch (e) {
-            console.error("Failed to parse local storage data", e);
-        }
-
-        // 3. Combine them (Local Storage overrides Hardcoded if they share a code)
-        const trackingDatabase = { ...baseTrackingDatabase, ...localData };
+        // ==========================================
+        // ⚠️ PASTE YOUR CLOUDFLARE WORKER URL HERE ⚠️
+        // ==========================================
+        const API_URL = "https://ips-parcel-tracker.jkay99781.workers.dev/"; 
 
         const timelineView = document.getElementById('timelineView');
         const timelineSheet = document.getElementById('timelineSheet');
+        const trackBtn = document.getElementById('trackBtn');
+        const originalBtnText = trackBtn.innerText;
 
-        function handleTrack(event) {
+        // Handle Form Submission with API Fetch
+        async function handleTrack(event) {
             event.preventDefault(); 
             const code = document.getElementById('trackingInput').value.trim().toUpperCase();
-            const data = trackingDatabase[code];
+            
+            // Set Loading State
+            trackBtn.innerText = "Tracking...";
+            trackBtn.disabled = true;
 
-            if (data) {
-                renderTimeline(data);
-            } else {
-                alert("Tracking code not found.");
+            try {
+                // Fetch data from Cloudflare Worker
+                const response = await fetch(`${API_URL}?code=${code}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Format the data from the Database structure to our UI structure
+                    const currentTime = new Date();
+                    
+                    // Only show events that have passed OR are explicitly marked completed in DB
+                    const visibleEvents = data.events.filter(e => {
+                        return e.completed === 1 || new Date(e.raw_date) <= currentTime;
+                    });
+
+                    const shipmentData = {
+                        status: data.shipment.status,
+                        destination: {
+                            location: data.shipment.dest_location,
+                            estimatedDate: data.shipment.est_date,
+                            actualDate: data.shipment.actual_date
+                        },
+                        events: visibleEvents
+                    };
+
+                    renderTimeline(shipmentData);
+                } else {
+                    alert("Tracking code not found. Please check the code and try again.");
+                }
+            } catch (error) {
+                console.error("API Error:", error);
+                alert("Network error. Please check your internet connection.");
+            } finally {
+                // Reset Button State
+                trackBtn.innerText = originalBtnText;
+                trackBtn.disabled = false;
             }
         }
 
@@ -179,35 +186,40 @@
             container.innerHTML = ''; 
             const events = data.events;
 
-            events.forEach((event, index) => {
-                const isLatest = index === events.length - 1;
-                let dotHTML = '';
-                
-                if (isLatest) {
-                    const blipperColor = data.status === "Delivered" ? "bg-emerald-500" : "bg-indigo-500";
-                    const centerDotColor = data.status === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.8)]";
+            if (!events || events.length === 0) {
+                container.innerHTML = `<div class="text-gray-500 text-sm pl-6">No tracking updates available yet.</div>`;
+            } else {
+                events.forEach((event, index) => {
+                    const isLatest = index === events.length - 1;
+                    let dotHTML = '';
                     
-                    dotHTML = `
-                        <div class="absolute -left-[9px] top-1 w-4 h-4">
-                            <div class="absolute inset-0 ${blipperColor} rounded-full animate-ping opacity-75"></div>
-                            <div class="relative w-full h-full ${centerDotColor} rounded-full border-4 border-white z-10"></div>
-                        </div>
+                    if (isLatest) {
+                        const blipperColor = data.status === "Delivered" ? "bg-emerald-500" : "bg-indigo-500";
+                        const centerDotColor = data.status === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.8)]";
+                        
+                        dotHTML = `
+                            <div class="absolute -left-[9px] top-1 w-4 h-4">
+                                <div class="absolute inset-0 ${blipperColor} rounded-full animate-ping opacity-75"></div>
+                                <div class="relative w-full h-full ${centerDotColor} rounded-full border-4 border-white z-10"></div>
+                            </div>
+                        `;
+                    } else {
+                        const dotColor = data.status === "Delivered" ? "bg-emerald-600" : "bg-indigo-600";
+                        dotHTML = `<div class="absolute -left-[9px] top-1 w-4 h-4 ${dotColor} rounded-full border-4 border-white z-10"></div>`;
+                    }
+                    
+                    const node = document.createElement('div');
+                    node.className = "relative pl-6";
+                    node.innerHTML = `
+                        ${dotHTML}
+                        <p class="text-[12px] text-gray-500 mb-0.5">${event.location} · ${event.time}</p>
+                        <p class="font-semibold text-gray-900 text-[14.5px] leading-tight">${event.message}</p>
                     `;
-                } else {
-                    const dotColor = data.status === "Delivered" ? "bg-emerald-600" : "bg-indigo-600";
-                    dotHTML = `<div class="absolute -left-[9px] top-1 w-4 h-4 ${dotColor} rounded-full border-4 border-white z-10"></div>`;
-                }
-                
-                const node = document.createElement('div');
-                node.className = "relative pl-6";
-                node.innerHTML = `
-                    ${dotHTML}
-                    <p class="text-[12px] text-gray-500 mb-0.5">${event.location} · ${event.time}</p>
-                    <p class="font-semibold text-gray-900 text-[14.5px] leading-tight">${event.message}</p>
-                `;
-                container.appendChild(node);
-            });
+                    container.appendChild(node);
+                });
+            }
 
+            // Render Destination Card
             if (data.destination) {
                 const isDelivered = data.status === "Delivered";
                 const lineClass = isDelivered ? "border-solid border-emerald-300" : "border-dashed border-indigo-300";
@@ -260,6 +272,7 @@
             setTimeout(() => { timelineView.classList.add('hidden'); }, 300); 
         }
 
+        // Drag to Dismiss Logic
         const dragHandle = document.getElementById('dragHandle');
         let startY = 0, currentY = 0, isDragging = false;
 
