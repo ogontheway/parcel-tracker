@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>International Parcel Service</title>
+    <!-- Favicon (IPS Shield) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z' fill='black'/><path d='M12 3L5 6v5c0 4.42 3.05 8.57 7 9.63 3.95-1.06 7-5.21 7-9.63V6l-7-3z' fill='%23facc15'/><text x='12' y='15' font-size='8' font-weight='bold' text-anchor='middle' fill='black'>ips</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -85,7 +87,6 @@
             </div>
 
             <div class="flex-1 overflow-y-auto no-scrollbar pb-6 relative">
-                <!-- The vertical line container - Color will be updated dynamically in JS -->
                 <div class="border-l-2 border-amber-200 ml-3 space-y-7 relative" id="timelineEvents"></div>
             </div>
 
@@ -221,7 +222,7 @@
         function renderTimeline(data, isUpdate = false) {
             const isDelivered = data.status === "Delivered";
             
-            // --- FIX: Dynamically change the vertical line color ---
+            // Dynamically change the vertical line color
             const lineColorClass = isDelivered ? "border-emerald-200" : "border-amber-200";
             timelineContainer.className = `border-l-2 ${lineColorClass} ml-3 space-y-7 relative`;
             
