@@ -24,7 +24,25 @@
 </head>
 <body class="min-h-screen py-8 px-4 flex flex-col items-center">
 
-    <div class="w-full max-w-[480px]">
+    <!-- 🔒 LOGIN SCREEN -->
+    <div id="loginScreen" class="fixed inset-0 bg-gray-100 z-50 flex items-center justify-center px-4">
+        <div class="bg-white p-8 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-[400px] text-center">
+            <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Admin Access</h2>
+            <p class="text-[13px] text-gray-500 mb-6">Please enter the password to access the O.G CMS.</p>
+            
+            <form onsubmit="handleLogin(event)">
+                <input type="password" id="passwordInput" placeholder="Enter password" class="front-input text-center mb-4" required>
+                <p id="loginError" class="text-red-500 text-[12px] font-bold mb-4 hidden">Incorrect password. Try again.</p>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-full shadow-[0_4px_14px_0_rgba(245,158,11,0.4)] transition-colors text-[17px]">Unlock CMS</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN CMS CONTENT (Hidden by default) -->
+    <div id="mainContent" class="hidden w-full max-w-[480px]">
         <div class="flex justify-between items-center mb-6 px-2">
             <div class="flex items-center gap-3">
                 <div class="relative w-10 h-10 flex items-center justify-center">
@@ -34,7 +52,10 @@
                 </div>
                 <h1 class="text-xl font-bold text-gray-900">O.G CMS</h1>
             </div>
-            <a href="index.html" class="text-[13px] font-bold text-gray-600 hover:text-gray-900 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm transition-colors flex items-center gap-1">Back to Tracker</a>
+            <div class="flex gap-2">
+                <button onclick="logout()" class="text-[13px] font-bold text-red-600 hover:text-red-800 bg-red-50 px-3 py-1.5 rounded-full border border-red-200 shadow-sm transition-colors">Logout</button>
+                <a href="index.html" class="text-[13px] font-bold text-gray-600 hover:text-gray-900 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm transition-colors flex items-center gap-1">Tracker</a>
+            </div>
         </div>
 
         <div id="mainFormCard" class="bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden mb-8">
@@ -143,41 +164,52 @@
     </div>
 
     <script>
+        // ==========================================
+        // 🔒 SET YOUR PASSWORD HERE
+        // ==========================================
+        const ADMIN_PASSWORD = "admin123"; 
         const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
 
+        // --- AUTHENTICATION LOGIC ---
+        function checkAuth() {
+            // Check if the user already logged in during this browser session
+            if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                init(); // Load the CMS data only if logged in
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const enteredPassword = document.getElementById('passwordInput').value;
+            
+            if (enteredPassword === ADMIN_PASSWORD) {
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                document.getElementById('loginError').classList.add('hidden');
+                checkAuth();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            window.location.reload();
+        }
+
+        // Check auth on page load
+        checkAuth();
+
+        // --- CMS LOGIC (Unchanged) ---
         const EVENT_MESSAGES = [
-            "Order Placed", 
-            "Order Shipped", 
-            "Label Created", 
-            "Picked Up by Carrier",
-            "Departed Origin Facility", 
-            "Arrived at Origin Hub",
-            "Departed Origin Hub",
-            "Arrived at Sorting Center", 
-            "Departed Sorting Center", 
-            "Arrived at Regional Hub", 
-            "Departed Regional Hub", 
-            "Customs Clearance Started",
-            "Held at Customs",
-            "Customs Released",
-            "In Transit to Next Facility",
-            "Arrived at Local Facility",
-            "Out for Delivery", 
-            "Delivery Attempted",
-            "Delivered, Front Door",
-            "Returned to Sender"
+            "Order Placed", "Order Shipped", "Label Created", "Picked Up by Carrier", "Departed Origin Facility", "Arrived at Origin Hub", "Departed Origin Hub", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance Started", "Held at Customs", "Customs Released", "In Transit to Next Facility", "Arrived at Local Facility", "Out for Delivery", "Delivery Attempted", "Delivered, Front Door", "Returned to Sender"
         ];
 
         const locationData = {
-            "US": { 
-                "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] 
-            },
-            "United Kingdom": {
-                "England": ["London, England", "Birmingham, England", "Manchester, England", "Leeds, England", "Liverpool, England", "Sheffield, England", "Bristol, England", "Newcastle, England", "Nottingham, England", "Leicester, England", "Southampton, England", "Portsmouth, England", "Coventry, England", "Bradford, England", "Sunderland, England", "Salford, England"],
-                "Scotland": ["Edinburgh, Scotland", "Glasgow, Scotland", "Aberdeen, Scotland", "Dundee, Scotland"],
-                "Wales": ["Cardiff, Wales", "Swansea, Wales", "Newport, Wales"],
-                "Northern Ireland": ["Belfast, Northern Ireland", "Derry, Northern Ireland"]
-            },
+            "US": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
+            "United Kingdom": { "England": ["London, England", "Birmingham, England", "Manchester, England", "Leeds, England", "Liverpool, England", "Sheffield, England", "Bristol, England", "Newcastle, England", "Nottingham, England", "Leicester, England", "Southampton, England", "Portsmouth, England", "Coventry, England", "Bradford, England", "Sunderland, England", "Salford, England"], "Scotland": ["Edinburgh, Scotland", "Glasgow, Scotland", "Aberdeen, Scotland", "Dundee, Scotland"], "Wales": ["Cardiff, Wales", "Swansea, Wales", "Newport, Wales"], "Northern Ireland": ["Belfast, Northern Ireland", "Derry, Northern Ireland"] },
             "Ireland": { "Leinster": ["Dublin, Ireland"], "Munster": ["Cork, Ireland", "Shannon, Ireland"] },
             "Netherlands": { "North Holland": ["Amsterdam, Netherlands"], "South Holland": ["Rotterdam, Netherlands", "The Hague, Netherlands"], "North Brabant": ["Eindhoven, Netherlands"] },
             "Belgium": { "Brussels": ["Brussels, Belgium"], "Flanders": ["Antwerp, Belgium", "Ghent, Belgium"], "Wallonia": ["Liege, Belgium"] },
@@ -612,8 +644,6 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        init();
     </script>
 </body>
 </html>
