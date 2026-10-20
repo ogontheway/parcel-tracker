@@ -17,8 +17,8 @@
 <body class="bg-gray-100 min-h-screen flex flex-col px-4 relative">
 
     <!-- Native Toast Notification -->
-    <div id="customToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 transition-all duration-300 translate-y-[-150%] opacity-0 pointer-events-none">
-        <span id="toastMessage" class="font-medium text-sm">Message</span>
+    <div id="customToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-sm bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg flex justify-center items-center transition-all duration-300 translate-y-[-150%] opacity-0 pointer-events-none">
+        <span id="toastMessage" class="font-medium text-sm text-center">Message</span>
     </div>
 
     <main class="flex-1 flex flex-col items-center justify-center w-full max-w-[420px] mx-auto pt-10 sm:pt-0">
@@ -49,7 +49,6 @@
 
             <form id="trackingForm" class="w-full" onsubmit="handleTrack(event)">
                 <label class="block text-gray-900 font-medium mb-3 text-[15px]">Your tracking code</label>
-                <!-- Removed uppercase class, added maxlength="9" -->
                 <input type="text" id="trackingInput" placeholder="e.g. IPS3408021" maxlength="9" class="w-full bg-[#f4f4f5] text-center text-[20px] sm:text-[22px] font-bold text-amber-600 placeholder-gray-400 py-3.5 rounded-md mb-6 outline-none focus:ring-2 focus:ring-amber-500/50 transition-shadow" required>
                 <button type="submit" id="trackBtn" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(245,158,11,0.4)] disabled:opacity-70 disabled:cursor-not-allowed">Track your item</button>
             </form>
@@ -101,7 +100,7 @@
         // ==========================================
         // PASTE YOUR CLOUDFLARE WORKER URL HERE
         // ==========================================
-        const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
+        const API_URL = "YOUR_CLOUDFLARE_WORKER_URL_HERE"; 
 
         const timelineView = document.getElementById('timelineView');
         const timelineSheet = document.getElementById('timelineSheet');
@@ -113,14 +112,11 @@
         let pollTimer = null;
         let lastEventCount = 0;
 
-        // --- Input Formatting Logic ---
         const trackingInput = document.getElementById('trackingInput');
         trackingInput.addEventListener('input', function() {
-            // Force uppercase, remove any character that isn't A-Z or 0-9
             this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         });
 
-        // --- Native Toast Logic ---
         let toastTimeout;
         function showToast(message, type = 'error') {
             const toast = document.getElementById('customToast');
