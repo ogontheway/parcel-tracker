@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>International Parcel Service</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -17,115 +15,57 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col px-4 relative">
-
-    <!-- Main Content Wrapper -->
     <main class="flex-1 flex flex-col items-center justify-center w-full max-w-[420px] mx-auto pt-10 sm:pt-0">
-        
-        <!-- Header -->
         <div class="flex flex-col items-center justify-center mb-6">
             <div class="relative w-16 h-16 flex items-center justify-center mb-1">
-                <svg class="absolute inset-0 w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                </svg>
-                <svg class="absolute inset-[2px] w-[calc(100%-4px)] h-[calc(100%-4px)] text-yellow-400" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 3L5 6v5c0 4.42 3.05 8.57 7 9.63 3.95-1.06 7-5.21 7-9.63V6l-7-3z"/>
-                </svg>
+                <svg class="absolute inset-0 w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                <svg class="absolute inset-[2px] w-[calc(100%-4px)] h-[calc(100%-4px)] text-yellow-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L5 6v5c0 4.42 3.05 8.57 7 9.63 3.95-1.06 7-5.21 7-9.63V6l-7-3z"/></svg>
                 <span class="relative z-10 font-bold text-black text-xl tracking-tighter">ips</span>
             </div>
             <h1 class="text-[15px] font-semibold text-gray-800">International Parcel Service</h1>
         </div>
 
-        <!-- Tracking Card -->
         <div id="searchCard" class="bg-white w-full rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-6 sm:p-8 flex flex-col items-center text-center">
-            
             <h2 class="text-[19px] font-bold text-gray-900 mb-6 uppercase tracking-wide">Pending Delivery</h2>
-            
-            <!-- Box Graphic -->
             <div class="relative mb-6">
                 <svg class="w-24 h-24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 30 L50 15 L80 30 L50 45 Z" fill="#d4a373"/>
-                    <path d="M20 30 L50 45 L50 85 L20 70 Z" fill="#b5835a"/>
-                    <path d="M80 30 L50 45 L50 85 L80 70 Z" fill="#e0b185"/>
-                    <path d="M35 22.5 L65 37.5 L65 45 L50 52.5 L35 45 Z" fill="#fefae0" opacity="0.6"/>
-                    <path d="M45 42.5 L55 47.5 L55 75 L45 70 Z" fill="#fefae0" opacity="0.6"/>
-                    <rect x="40" y="55" width="20" height="15" fill="#fefae0" opacity="0.8"/>
+                    <path d="M20 30 L50 15 L80 30 L50 45 Z" fill="#d4a373"/><path d="M20 30 L50 45 L50 85 L20 70 Z" fill="#b5835a"/><path d="M80 30 L50 45 L50 85 L80 70 Z" fill="#e0b185"/><path d="M35 22.5 L65 37.5 L65 45 L50 52.5 L35 45 Z" fill="#fefae0" opacity="0.6"/><path d="M45 42.5 L55 47.5 L55 75 L45 70 Z" fill="#fefae0" opacity="0.6"/><rect x="40" y="55" width="20" height="15" fill="#fefae0" opacity="0.8"/>
                 </svg>
-                
-                <!-- Pending Clock Icon -->
                 <div class="absolute top-0 right-0 bg-amber-500 rounded-full p-1 border-2 border-white shadow-sm">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
             </div>
-
-            <p class="text-[14.5px] text-gray-800 leading-snug mb-6 px-2">
-                You have a pending delivery. Use your unique tracking code to track and receive your item.
-            </p>
-
+            <p class="text-[14.5px] text-gray-800 leading-snug mb-6 px-2">You have a pending delivery. Use your unique tracking code to track and receive your item.</p>
             <div class="w-full border-t border-gray-200 mb-6"></div>
-
             <form id="trackingForm" class="w-full" onsubmit="handleTrack(event)">
                 <label class="block text-gray-900 font-medium mb-3 text-[15px]">Your tracking code</label>
-                
-                <input 
-                    type="text" 
-                    id="trackingInput" 
-                    placeholder="e.g. IPS3408021"
-                    class="w-full bg-[#f4f4f5] text-center text-[20px] sm:text-[22px] font-bold text-[#0f766e] placeholder-gray-400 py-3.5 rounded-md mb-6 outline-none focus:ring-2 focus:ring-[#0f766e]/50 transition-shadow uppercase"
-                    required
-                >
-                
-                <button 
-                    type="submit"
-                    id="trackBtn"
-                    class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                    Track your item
-                </button>
+                <input type="text" id="trackingInput" placeholder="e.g. IPS3408021" class="w-full bg-[#f4f4f5] text-center text-[20px] sm:text-[22px] font-bold text-[#0f766e] placeholder-gray-400 py-3.5 rounded-md mb-6 outline-none focus:ring-2 focus:ring-[#0f766e]/50 transition-shadow uppercase" required>
+                <button type="submit" id="trackBtn" class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] disabled:opacity-70 disabled:cursor-not-allowed">Track your item</button>
             </form>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="w-full text-center py-6 mt-auto">
         <p class="text-[12px] text-gray-400 font-medium">&copy; <span id="currentYear"></span>. All rights reserved.</p>
     </footer>
 
-    <!-- Timeline Overlay Modal -->
     <div id="timelineView" class="hidden fixed inset-0 z-50 flex flex-col justify-end sm:justify-center sm:items-center">
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeTimeline()"></div>
-        
         <div id="timelineSheet" class="bg-white w-full sm:max-w-[420px] rounded-t-[30px] sm:rounded-[24px] p-6 relative z-10 flex flex-col max-h-[90vh] sm:max-h-[80vh] translate-y-full sm:translate-y-8 sm:opacity-0 transition-all duration-300 ease-out shadow-2xl">
-            <div id="dragHandle" class="w-full pt-2 pb-4 flex justify-center sm:hidden">
-                <div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
-            </div>
-            
+            <div id="dragHandle" class="w-full pt-2 pb-4 flex justify-center sm:hidden"><div class="w-12 h-1.5 bg-gray-300 rounded-full"></div></div>
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-[22px] font-bold text-gray-900">Delivery progress</h2>
-                <button onclick="closeTimeline()" class="hidden sm:block text-gray-400 hover:text-gray-700">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeTimeline()" class="hidden sm:block text-gray-400 hover:text-gray-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-
             <div class="flex-1 overflow-y-auto no-scrollbar pb-6 relative">
-                <div class="border-l-2 border-indigo-200 ml-3 space-y-7 relative" id="timelineEvents">
-                    <!-- JS will inject events and destination here -->
-                </div>
+                <div class="border-l-2 border-indigo-200 ml-3 space-y-7 relative" id="timelineEvents"></div>
             </div>
-
-            <div class="pt-4 border-t border-gray-100">
-                <button onclick="closeTimeline()" class="w-full bg-[#e5e7eb] hover:bg-gray-300 transition-colors text-gray-900 font-semibold py-3.5 rounded-xl text-[15px]">Close details</button>
-            </div>
+            <div class="pt-4 border-t border-gray-100"><button onclick="closeTimeline()" class="w-full bg-[#e5e7eb] hover:bg-gray-300 transition-colors text-gray-900 font-semibold py-3.5 rounded-xl text-[15px]">Close details</button></div>
         </div>
     </div>
 
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // ==========================================
-        // ⚠️ PASTE YOUR CLOUDFLARE WORKER URL HERE ⚠️
-        // ==========================================
         const API_URL = "https://internationalparcel-tracker.jkay99781.workers.dev/"; 
 
         const timelineView = document.getElementById('timelineView');
@@ -133,60 +73,92 @@
         const trackBtn = document.getElementById('trackBtn');
         const originalBtnText = trackBtn.innerText;
 
-        // Handle Form Submission with API Fetch
+        // Polling Variables
+        let currentCode = null;
+        let pollingInterval = null;
+
         async function handleTrack(event) {
             event.preventDefault(); 
             const code = document.getElementById('trackingInput').value.trim().toUpperCase();
             
-            // Set Loading State
             trackBtn.innerText = "Tracking...";
             trackBtn.disabled = true;
 
             try {
-                // Fetch data from Cloudflare Worker
                 const response = await fetch(`${API_URL}?code=${code}`);
-                
                 if (response.ok) {
                     const data = await response.json();
-                    
-                    // Format the data from the Database structure to our UI structure
-                    const currentTime = new Date();
-                    
-                    // Only show events that have passed OR are explicitly marked completed in DB
-                    const visibleEvents = data.events.filter(e => {
-                        return e.completed === 1 || new Date(e.raw_date) <= currentTime;
-                    });
-
-                    const shipmentData = {
-                        status: data.shipment.status,
-                        destination: {
-                            location: data.shipment.dest_location,
-                            estimatedDate: data.shipment.est_date,
-                            actualDate: data.shipment.actual_date
-                        },
-                        events: visibleEvents
-                    };
-
-                    renderTimeline(shipmentData);
+                    currentCode = code; 
+                    renderTimeline(data, true); // true = trigger slide up animation
+                    startPolling(); // Start checking for new events every 30s
                 } else {
-                    alert("Tracking code not found. Please check the code and try again.");
+                    alert("Tracking code not found.");
                 }
             } catch (error) {
-                console.error("API Error:", error);
-                alert("Network error. Please check your internet connection.");
+                alert("Network error.");
             } finally {
-                // Reset Button State
                 trackBtn.innerText = originalBtnText;
                 trackBtn.disabled = false;
             }
         }
 
-        function renderTimeline(data) {
-            const container = document.getElementById('timelineEvents');
-            container.innerHTML = ''; 
-            const events = data.events;
+        // SILENT BACKGROUND POLLING
+        function startPolling() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            
+            pollingInterval = setInterval(async () => {
+                // Only poll if the modal is visible
+                if (timelineView.classList.contains('hidden')) return;
 
-            if (!events || events.length === 0) {
+                try {
+                    const res = await fetch(`${API_URL}?code=${currentCode}`);
+                    if (res.ok) {
+                        const newData = await res.json();
+                        
+                        // Check if data has changed (e.g., a new event appeared)
+                        const currentEventCount = document.querySelectorAll('#timelineEvents .relative').length;
+                        const newEventCount = newData.events.length; // Note: destination counts as 1 node in DOM but not in events array. Let's adjust check.
+
+                        // More accurate check: Has the array length changed, OR did the status change?
+                        const currentStatus = document.querySelector('#timelineEvents').getAttribute('data-status');
+                        if (newEventCount !== window.lastRenderedEventCount || newData.shipment.status !== currentStatus) {
+                            // Data changed! Re-render silently (no slide animation)
+                            renderTimeline(newData, false); 
+                        }
+                    }
+                } catch (e) {
+                    console.log("Polling error", e);
+                }
+            }, 30000); // 30 seconds
+        }
+
+        function stopPolling() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            currentCode = null;
+            window.lastRenderedEventCount = 0;
+        }
+
+        function renderTimeline(data, animate = true) {
+            const container = document.getElementById('timelineEvents');
+            container.setAttribute('data-status', data.shipment.status); // Track status for polling
+            container.innerHTML = ''; 
+            
+            let events = data.events;
+            
+            // Update tracking for polling logic
+            window.lastRenderedEventCount = events.length;
+
+            // Frontend Override: If the last event is "Delivered", force the status to green immediately
+            // This handles the gap between real-time appearance and the 5-minute Cron Job DB update
+            let effectiveStatus = data.shipment.status;
+            if (events.length > 0) {
+                const lastEvent = events[events.length - 1];
+                if (lastEvent.message.includes("Delivered")) {
+                    effectiveStatus = "Delivered";
+                }
+            }
+
+            if (events.length === 0) {
                 container.innerHTML = `<div class="text-gray-500 text-sm pl-6">No tracking updates available yet.</div>`;
             } else {
                 events.forEach((event, index) => {
@@ -194,17 +166,12 @@
                     let dotHTML = '';
                     
                     if (isLatest) {
-                        const blipperColor = data.status === "Delivered" ? "bg-emerald-500" : "bg-indigo-500";
-                        const centerDotColor = data.status === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.8)]";
+                        const blipperColor = effectiveStatus === "Delivered" ? "bg-emerald-500" : "bg-indigo-500";
+                        const centerDotColor = effectiveStatus === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.8)]";
                         
-                        dotHTML = `
-                            <div class="absolute -left-[9px] top-1 w-4 h-4">
-                                <div class="absolute inset-0 ${blipperColor} rounded-full animate-ping opacity-75"></div>
-                                <div class="relative w-full h-full ${centerDotColor} rounded-full border-4 border-white z-10"></div>
-                            </div>
-                        `;
+                        dotHTML = `<div class="absolute -left-[9px] top-1 w-4 h-4"><div class="absolute inset-0 ${blipperColor} rounded-full animate-ping opacity-75"></div><div class="relative w-full h-full ${centerDotColor} rounded-full border-4 border-white z-10"></div></div>`;
                     } else {
-                        const dotColor = data.status === "Delivered" ? "bg-emerald-600" : "bg-indigo-600";
+                        const dotColor = effectiveStatus === "Delivered" ? "bg-emerald-600" : "bg-indigo-600";
                         dotHTML = `<div class="absolute -left-[9px] top-1 w-4 h-4 ${dotColor} rounded-full border-4 border-white z-10"></div>`;
                     }
                     
@@ -220,8 +187,8 @@
             }
 
             // Render Destination Card
-            if (data.destination) {
-                const isDelivered = data.status === "Delivered";
+            if (data.shipment.dest_location) {
+                const isDelivered = effectiveStatus === "Delivered";
                 const lineClass = isDelivered ? "border-solid border-emerald-300" : "border-dashed border-indigo-300";
                 const pinBg = isDelivered ? "bg-emerald-100 border-emerald-500" : "bg-indigo-100 border-indigo-500";
                 const cardBg = isDelivered ? "bg-emerald-50 border-emerald-200" : "bg-indigo-50 border-indigo-100";
@@ -233,18 +200,19 @@
                     : `<svg class="w-3.5 h-3.5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>`;
 
                 const titleText = isDelivered ? 'Delivery Complete' : 'Final Destination';
-                const dateText = isDelivered ? `Delivered: ${data.destination.actualDate}` : `Est. Arrival: ${data.destination.estimatedDate}`;
+                
+                // Use actual date if delivered, else estimated date
+                const displayDate = isDelivered && data.shipment.actual_date ? data.shipment.actual_date : data.shipment.est_date;
+                const dateText = isDelivered ? `Delivered: ${displayDate}` : `Est. Arrival: ${displayDate}`;
 
                 const destNode = document.createElement('div');
                 destNode.className = "relative pl-6 pt-4";
                 destNode.innerHTML = `
                     <div class="absolute left-[7px] -top-7 h-12 border-l-2 ${lineClass} z-0"></div>
-                    <div class="absolute -left-[11px] top-5 w-6 h-6 ${pinBg} border-2 rounded-full flex items-center justify-center z-10 shadow-sm transition-colors duration-300">
-                        ${iconHTML}
-                    </div>
+                    <div class="absolute -left-[11px] top-5 w-6 h-6 ${pinBg} border-2 rounded-full flex items-center justify-center z-10 shadow-sm transition-colors duration-300">${iconHTML}</div>
                     <div class="${cardBg} border rounded-xl p-3.5 ml-2 shadow-sm transition-colors duration-300">
                         <p class="text-[10px] font-bold ${titleColor} uppercase tracking-wider mb-0.5">${titleText}</p>
-                        <p class="font-bold text-gray-900 text-[14.5px]">${data.destination.location}</p>
+                        <p class="font-bold text-gray-900 text-[14.5px]">${data.shipment.dest_location}</p>
                         <p class="text-[12.5px] font-medium ${dateColor} mt-1 flex items-center gap-1">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             ${dateText}
@@ -254,17 +222,19 @@
                 container.appendChild(destNode);
             }
 
-            timelineSheet.style.transform = '';
-            timelineSheet.style.transition = '';
-            timelineView.classList.remove('hidden');
-            
-            setTimeout(() => {
-                timelineSheet.classList.remove('translate-y-full', 'sm:translate-y-8', 'sm:opacity-0');
-                timelineSheet.classList.add('translate-y-0', 'sm:opacity-100');
-            }, 10);
+            if (animate) {
+                timelineSheet.style.transform = '';
+                timelineSheet.style.transition = '';
+                timelineView.classList.remove('hidden');
+                setTimeout(() => {
+                    timelineSheet.classList.remove('translate-y-full', 'sm:translate-y-8', 'sm:opacity-0');
+                    timelineSheet.classList.add('translate-y-0', 'sm:opacity-100');
+                }, 10);
+            }
         }
 
         function closeTimeline() {
+            stopPolling(); // Stop checking when closed
             timelineSheet.style.transform = '';
             timelineSheet.style.transition = '';
             timelineSheet.classList.remove('translate-y-0', 'sm:opacity-100');
@@ -272,28 +242,21 @@
             setTimeout(() => { timelineView.classList.add('hidden'); }, 300); 
         }
 
-        // Drag to Dismiss Logic
         const dragHandle = document.getElementById('dragHandle');
         let startY = 0, currentY = 0, isDragging = false;
-
         dragHandle.addEventListener('pointerdown', (e) => {
             if (window.innerWidth >= 640) return;
-            startY = e.clientY;
-            isDragging = true;
-            timelineSheet.style.transition = 'none';
+            startY = e.clientY; isDragging = true; timelineSheet.style.transition = 'none';
         });
-
         window.addEventListener('pointermove', (e) => {
             if (!isDragging) return;
             currentY = e.clientY;
             let deltaY = currentY - startY;
             if (deltaY > 0) timelineSheet.style.transform = `translateY(${deltaY}px)`;
         });
-
         window.addEventListener('pointerup', () => {
             if (!isDragging) return;
-            isDragging = false;
-            timelineSheet.style.transition = '';
+            isDragging = false; timelineSheet.style.transition = '';
             let deltaY = currentY - startY;
             if (deltaY > 100) closeTimeline();
             timelineSheet.style.transform = '';
