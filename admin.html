@@ -60,16 +60,26 @@
                 </h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">Overall Status</label>
-                        <select id="cmsStatus" class="front-input text-[14px]">
-                            <option value="Pending Delivery">Pending Delivery</option>
-                            <option value="Delivered">Delivered</option>
-                        </select>
-                    </div>
+                    <!-- REMOVED Overall Status -->
                     <div>
                         <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">Est. Arrival Date <span class="text-red-500">*</span></label>
                         <input type="date" id="cmsEstDate" class="front-input text-[14px]" required>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">Time Zone <span class="text-red-500">*</span></label>
+                        <select id="cmsTimezone" class="front-input text-[14px]">
+                            <option value="Z">GMT / UTC (Default)</option>
+                            <option value="-05:00">EST (New York, UTC-5)</option>
+                            <option value="-06:00">CST (Chicago, UTC-6)</option>
+                            <option value="-07:00">MST (Denver, UTC-7)</option>
+                            <option value="-08:00">PST (Los Angeles, UTC-8)</option>
+                            <option value="+00:00">WET (London, UTC+0)</option>
+                            <option value="+01:00">CET (Paris/Berlin, UTC+1)</option>
+                            <option value="+05:30">IST (India, UTC+5:30)</option>
+                            <option value="+08:00">SGT (Singapore, UTC+8)</option>
+                            <option value="+09:00">JST (Tokyo, UTC+9)</option>
+                            <option value="+10:00">AEST (Sydney, UTC+10)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -136,7 +146,30 @@
     <script>
         const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
 
-        const EVENT_MESSAGES = ["Order Placed", "Order Shipped", "Departed Origin Facility", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance", "Out for Delivery", "Delivered, Front Door"];
+        // ADDED MORE INTERNATIONAL STAGES
+        const EVENT_MESSAGES = [
+            "Order Placed", 
+            "Order Shipped", 
+            "Label Created", 
+            "Picked Up by Carrier",
+            "Departed Origin Facility", 
+            "Arrived at Origin Hub",
+            "Departed Origin Hub",
+            "Arrived at Sorting Center", 
+            "Departed Sorting Center", 
+            "Arrived at Regional Hub", 
+            "Departed Regional Hub", 
+            "Customs Clearance Started",
+            "Held at Customs",
+            "Customs Released",
+            "In Transit to Next Facility",
+            "Arrived at Local Facility",
+            "Out for Delivery", 
+            "Delivery Attempted",
+            "Delivered, Front Door",
+            "Returned to Sender"
+        ];
+
         const locationData = {
             "US": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
             "England": { "Greater London": ["London, England"], "West Midlands": ["Birmingham, England", "Coventry, England"], "Greater Manchester": ["Manchester, England", "Salford, England"], "West Yorkshire": ["Leeds, England", "Bradford, England"], "Merseyside": ["Liverpool, England"], "South Yorkshire": ["Sheffield, England"], "Tyne and Wear": ["Newcastle, England", "Sunderland, England"], "Nottinghamshire": ["Nottingham, England"], "Leicestershire": ["Leicester, England"], "Bristol": ["Bristol, England"], "Hampshire": ["Southampton, England", "Portsmouth, England"] },
@@ -152,6 +185,7 @@
         const timelineSection = document.getElementById('timelineSection');
         const timelineHint = document.getElementById('timelineHint');
         const estDateInput = document.getElementById('cmsEstDate');
+        const cmsTimezone = document.getElementById('cmsTimezone');
         const destCountry = document.getElementById('destCountry');
         const destState = document.getElementById('destState');
         const destCity = document.getElementById('destCity');
@@ -261,7 +295,7 @@
                 const lastMessage = lastRow.querySelector('.event-message').value;
                 const lastTime = lastRow.querySelector('.event-time').value;
                 if (!lastTime) { alert("Please fill in the Date & Time for the current stage before adding a new one."); return; }
-                if (lastMessage === "Delivered, Front Door") { alert("This package has already been marked as Delivered."); return; }
+                if (lastMessage.includes("Delivered") || lastMessage === "Returned to Sender") { alert("This package journey is complete."); return; }
             }
 
             const div = document.createElement('div');
@@ -371,11 +405,12 @@
         async function saveTrackingCode() {
             const numbers = document.getElementById('cmsCodeNumbers').value.trim();
             const estDateVal = estDateInput.value;
+            const timezoneOffset = cmsTimezone.value;
+
             if (numbers.length !== 6 || isNaN(numbers)) { alert("Please generate a valid 6-digit number."); return; }
             if (!estDateVal) { alert("Please set an Estimated Arrival Date."); return; }
 
             const code = `IPS${numbers}`;
-            const status = document.getElementById('cmsStatus').value;
             const d = new Date(estDateVal + 'T12:00:00'); 
             const destDate = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 
@@ -385,30 +420,48 @@
 
             let validationError = "";
             let previousDate = null;
+            let finalStatus = "Pending Delivery"; // Default
 
             rows.forEach((row, index) => {
                 const msg = row.querySelector('.event-message').value;
                 const loc = row.querySelector('.event-city').value;
-                const timeRaw = row.querySelector('.event-time').value;
+                const timeRaw = row.querySelector('.event-time').value; // e.g., "2024-11-15T14:00"
                 
                 if (!timeRaw) validationError = `Stage ${index + 1} (${msg}) is missing a Date & Time.`;
+                
                 const eventDate = new Date(timeRaw);
                 const estDateObj = new Date(estDateVal + 'T23:59:59'); 
                 if (eventDate > estDateObj) validationError = `Stage ${index + 1} (${msg}) is dated after the Estimated Arrival Date.`;
                 if (previousDate && eventDate < previousDate) validationError = `Stage ${index + 1} (${msg}) cannot be dated before the previous stage.`;
                 previousDate = eventDate;
 
+                // MATHEMATICAL TIMEZONE CONVERSION
+                // Append the offset to the raw date string (e.g., 2024-11-15T14:00-05:00)
+                // This turns it into a valid ISO 8601 string that the Worker can compare against UTC.
+                const rawDateWithTz = `${timeRaw}:00${timezoneOffset}`;
+
+                // Calculate display time
                 const datePart = eventDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
                 const timePart = eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
-                events.push({ location: loc, time: `${datePart}, ${timePart}`, message: msg, rawDate: timeRaw });
+                
+                // AUTO-STATUS LOGIC: If the last event added is "Delivered", set status to Delivered
+                if (index === rows.length - 1 && (msg.includes("Delivered") || msg === "Returned to Sender")) {
+                    finalStatus = (msg === "Returned to Sender") ? "Pending Delivery" : "Delivered"; 
+                }
+
+                events.push({ location: loc, time: `${datePart}, ${timePart}`, message: msg, rawDate: rawDateWithTz });
             });
 
             if (validationError) { alert(validationError); return; }
 
             const newData = {
                 code: code,
-                status: status,
-                destination: { location: destCity.value, estimatedDate: destDate, actualDate: status === "Delivered" ? events[events.length - 1].time : null },
+                status: finalStatus, // Passed automatically
+                destination: { 
+                    location: destCity.value, 
+                    estimatedDate: destDate, 
+                    actualDate: finalStatus === "Delivered" ? events[events.length - 1].time : null 
+                },
                 events: events
             };
 
@@ -441,6 +494,7 @@
             document.getElementById('cmsCodeNumbers').value = '';
             eventsContainer.innerHTML = '';
             document.getElementById('cmsEstDate').value = '';
+            cmsTimezone.value = "Z"; // Reset to GMT
             timelineSection.classList.add('opacity-50', 'pointer-events-none');
             timelineHint.classList.remove('hidden');
             saveBtn.innerText = "Save New Tracking Code";
@@ -516,7 +570,6 @@
             generateBtn.classList.add('opacity-50', 'cursor-not-allowed', 'hover:bg-amber-500'); 
             
             document.getElementById('cmsCodeNumbers').value = code.replace('IPS', '');
-            document.getElementById('cmsStatus').value = data.status;
             
             let estDateRaw = data.destination.estimatedDate;
             if (estDateRaw && estDateRaw !== "TBD") {
