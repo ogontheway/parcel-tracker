@@ -60,7 +60,6 @@
                 </h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <!-- REMOVED Overall Status -->
                     <div>
                         <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">Est. Arrival Date <span class="text-red-500">*</span></label>
                         <input type="date" id="cmsEstDate" class="front-input text-[14px]" required>
@@ -146,7 +145,6 @@
     <script>
         const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
 
-        // ADDED MORE INTERNATIONAL STAGES
         const EVENT_MESSAGES = [
             "Order Placed", 
             "Order Shipped", 
@@ -170,15 +168,32 @@
             "Returned to Sender"
         ];
 
+        // MASSIVE EXPANSION OF LOCATIONS (UK, Europe, and existing)
         const locationData = {
-            "US": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
-            "England": { "Greater London": ["London, England"], "West Midlands": ["Birmingham, England", "Coventry, England"], "Greater Manchester": ["Manchester, England", "Salford, England"], "West Yorkshire": ["Leeds, England", "Bradford, England"], "Merseyside": ["Liverpool, England"], "South Yorkshire": ["Sheffield, England"], "Tyne and Wear": ["Newcastle, England", "Sunderland, England"], "Nottinghamshire": ["Nottingham, England"], "Leicestershire": ["Leicester, England"], "Bristol": ["Bristol, England"], "Hampshire": ["Southampton, England", "Portsmouth, England"] },
-            "Canada": { "Ontario": ["Toronto, ON", "Ottawa, ON", "Mississauga, ON"], "Quebec": ["Montreal, QC", "Quebec City, QC"], "British Columbia": ["Vancouver, BC", "Victoria, BC", "Surrey, BC"], "Alberta": ["Calgary, AB", "Edmonton, AB"] },
-            "Australia": { "New South Wales": ["Sydney, NSW", "Newcastle, NSW"], "Victoria": ["Melbourne, VIC", "Geelong, VIC"], "Queensland": ["Brisbane, QLD", "Gold Coast, QLD"], "Western Australia": ["Perth, WA"] },
-            "Germany": { "Bavaria": ["Munich, BY", "Nuremberg, BY"], "North Rhine-Westphalia": ["Cologne, NW", "Dusseldorf, NW"], "Berlin": ["Berlin, BE"], "Hesse": ["Frankfurt, HE"] },
-            "France": { "Ile-de-France": ["Paris, IDF"], "Provence-Alpes-Cote d'Azur": ["Marseille, PAC", "Nice, PAC"], "Auvergne-Rhone-Alpes": ["Lyon, ARA"] },
-            "Japan": { "Tokyo": ["Tokyo, TK"], "Osaka": ["Osaka, OS"], "Aichi": ["Nagoya, AI"], "Fukuoka": ["Fukuoka, FK"] },
-            "China": { "Guangdong": ["Guangzhou, GD", "Shenzhen, GD"], "Shanghai": ["Shanghai, SH"], "Beijing": ["Beijing, BJ"], "Zhejiang": ["Hangzhou, ZJ"] }
+            "US": { 
+                "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] 
+            },
+            "United Kingdom": {
+                "England": ["London, England", "Birmingham, England", "Manchester, England", "Leeds, England", "Liverpool, England", "Sheffield, England", "Bristol, England", "Newcastle, England", "Nottingham, England", "Leicester, England", "Southampton, England", "Portsmouth, England", "Coventry, England", "Bradford, England", "Sunderland, England", "Salford, England"],
+                "Scotland": ["Edinburgh, Scotland", "Glasgow, Scotland", "Aberdeen, Scotland", "Dundee, Scotland"],
+                "Wales": ["Cardiff, Wales", "Swansea, Wales", "Newport, Wales"],
+                "Northern Ireland": ["Belfast, Northern Ireland", "Derry, Northern Ireland"]
+            },
+            "Ireland": { "Leinster": ["Dublin, Ireland"], "Munster": ["Cork, Ireland", "Shannon, Ireland"] },
+            "Netherlands": { "North Holland": ["Amsterdam, Netherlands"], "South Holland": ["Rotterdam, Netherlands", "The Hague, Netherlands"], "North Brabant": ["Eindhoven, Netherlands"] },
+            "Belgium": { "Brussels": ["Brussels, Belgium"], "Flanders": ["Antwerp, Belgium", "Ghent, Belgium"], "Wallonia": ["Liege, Belgium"] },
+            "Spain": { "Madrid": ["Madrid, Spain"], "Catalonia": ["Barcelona, Spain"], "Valencia": ["Valencia, Spain"], "Andalusia": ["Seville, Spain"], "Aragon": ["Zaragoza, Spain"] },
+            "Italy": { "Lazio": ["Rome, Italy"], "Lombardy": ["Milan, Italy"], "Campania": ["Naples, Italy"], "Piedmont": ["Turin, Italy"], "Tuscany": ["Florence, Italy"], "Liguria": ["Genoa, Italy"] },
+            "Switzerland": { "Zurich": ["Zurich, Switzerland"], "Geneva": ["Geneva, Switzerland"], "Basel-Stadt": ["Basel, Switzerland"] },
+            "Sweden": { "Stockholm": ["Stockholm, Sweden"], "Vastra Gotaland": ["Gothenburg, Sweden"], "Skane": ["Malmo, Sweden"] },
+            "Norway": { "Oslo": ["Oslo, Norway"], "Vestland": ["Bergen, Norway"] },
+            "Denmark": { "Capital Region": ["Copenhagen, Denmark"], "Central Jutland": ["Aarhus, Denmark"] },
+            "Germany": { "Bavaria": ["Munich, Germany", "Nuremberg, Germany"], "North Rhine-Westphalia": ["Cologne, Germany", "Dusseldorf, Germany"], "Berlin": ["Berlin, Germany"], "Hesse": ["Frankfurt, Germany"] },
+            "France": { "Ile-de-France": ["Paris, France"], "Provence-Alpes-Cote d'Azur": ["Marseille, France", "Nice, France"], "Auvergne-Rhone-Alpes": ["Lyon, France"] },
+            "Canada": { "Ontario": ["Toronto, Canada", "Ottawa, Canada", "Mississauga, Canada"], "Quebec": ["Montreal, Canada", "Quebec City, Canada"], "British Columbia": ["Vancouver, Canada", "Victoria, Canada", "Surrey, Canada"], "Alberta": ["Calgary, Canada", "Edmonton, Canada"] },
+            "Australia": { "New South Wales": ["Sydney, Australia", "Newcastle, Australia"], "Victoria": ["Melbourne, Australia", "Geelong, Australia"], "Queensland": ["Brisbane, Australia", "Gold Coast, Australia"], "Western Australia": ["Perth, Australia"] },
+            "Japan": { "Tokyo": ["Tokyo, Japan"], "Osaka": ["Osaka, Japan"], "Aichi": ["Nagoya, Japan"], "Fukuoka": ["Fukuoka, Japan"] },
+            "China": { "Guangdong": ["Guangzhou, China", "Shenzhen, China"], "Shanghai": ["Shanghai, China"], "Beijing": ["Beijing, China"], "Zhejiang": ["Hangzhou, China"] }
         };
 
         const eventsContainer = document.getElementById('eventsContainer');
@@ -420,12 +435,12 @@
 
             let validationError = "";
             let previousDate = null;
-            let finalStatus = "Pending Delivery"; // Default
+            let finalStatus = "Pending Delivery"; 
 
             rows.forEach((row, index) => {
                 const msg = row.querySelector('.event-message').value;
                 const loc = row.querySelector('.event-city').value;
-                const timeRaw = row.querySelector('.event-time').value; // e.g., "2024-11-15T14:00"
+                const timeRaw = row.querySelector('.event-time').value; 
                 
                 if (!timeRaw) validationError = `Stage ${index + 1} (${msg}) is missing a Date & Time.`;
                 
@@ -435,16 +450,11 @@
                 if (previousDate && eventDate < previousDate) validationError = `Stage ${index + 1} (${msg}) cannot be dated before the previous stage.`;
                 previousDate = eventDate;
 
-                // MATHEMATICAL TIMEZONE CONVERSION
-                // Append the offset to the raw date string (e.g., 2024-11-15T14:00-05:00)
-                // This turns it into a valid ISO 8601 string that the Worker can compare against UTC.
                 const rawDateWithTz = `${timeRaw}:00${timezoneOffset}`;
 
-                // Calculate display time
                 const datePart = eventDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
                 const timePart = eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
                 
-                // AUTO-STATUS LOGIC: If the last event added is "Delivered", set status to Delivered
                 if (index === rows.length - 1 && (msg.includes("Delivered") || msg === "Returned to Sender")) {
                     finalStatus = (msg === "Returned to Sender") ? "Pending Delivery" : "Delivered"; 
                 }
@@ -456,7 +466,7 @@
 
             const newData = {
                 code: code,
-                status: finalStatus, // Passed automatically
+                status: finalStatus,
                 destination: { 
                     location: destCity.value, 
                     estimatedDate: destDate, 
@@ -494,7 +504,7 @@
             document.getElementById('cmsCodeNumbers').value = '';
             eventsContainer.innerHTML = '';
             document.getElementById('cmsEstDate').value = '';
-            cmsTimezone.value = "Z"; // Reset to GMT
+            cmsTimezone.value = "Z"; 
             timelineSection.classList.add('opacity-50', 'pointer-events-none');
             timelineHint.classList.remove('hidden');
             saveBtn.innerText = "Save New Tracking Code";
