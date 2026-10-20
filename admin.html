@@ -4,50 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O.G CMS - International Parcel Service</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        
-        .front-input {
-            width: 100%; 
-            background-color: #f4f4f5; 
-            border-radius: 0.5rem; 
-            padding: 0.85rem 1rem; 
-            font-size: 1rem; 
-            font-weight: 700; 
-            color: #1f2937;
-            outline: none; 
-            border: 2px solid transparent;
-            transition: all 0.2s;
-        }
-        .front-input:focus { 
-            border-color: #0d9488; 
-            background-color: #ffffff;
-        }
-        
-        select.front-input {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230f766e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.75rem center;
-            background-repeat: no-repeat;
-            background-size: 1.25em 1.25em;
-            padding-right: 2.5rem;
-            cursor: pointer;
-        }
+        .front-input { width: 100%; background-color: #f4f4f5; border-radius: 0.5rem; padding: 0.85rem 1rem; font-size: 1rem; font-weight: 700; color: #1f2937; outline: none; border: 2px solid transparent; transition: all 0.2s; }
+        .front-input:focus { border-color: #0d9488; background-color: #ffffff; }
+        select.front-input { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230f766e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em; padding-right: 2.5rem; cursor: pointer; }
         select.front-input option { background-color: #ffffff; color: #1f2937; font-weight: 500; padding: 10px; }
         input[type="datetime-local"], input[type="date"] { appearance: none; -webkit-appearance: none; }
-        
         .event-row { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Toggle Switch CSS */
+        .toggle-checkbox:checked { right: 0; border-color: #0d9488; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #0d9488; }
     </style>
 </head>
 <body class="min-h-screen py-8 px-4 flex flex-col items-center">
-
     <div class="w-full max-w-[480px]">
-        <!-- Header -->
         <div class="flex justify-between items-center mb-6 px-2">
             <div class="flex items-center gap-3">
                 <div class="relative w-10 h-10 flex items-center justify-center">
@@ -57,15 +32,10 @@
                 </div>
                 <h1 class="text-xl font-bold text-gray-900">O.G CMS</h1>
             </div>
-            <a href="index.html" class="text-[13px] font-bold text-gray-600 hover:text-gray-900 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm transition-colors flex items-center gap-1">
-                Back to Tracker
-            </a>
+            <a href="index.html" class="text-[13px] font-bold text-gray-600 hover:text-gray-900 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm transition-colors flex items-center gap-1">Back to Tracker</a>
         </div>
 
-        <!-- Main CMS Card (Creation Form) -->
         <div id="mainFormCard" class="bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden mb-8">
-            
-            <!-- Section 1: Tracking Code -->
             <div class="p-6 border-b border-gray-100">
                 <h2 class="text-[16px] font-bold text-gray-800 uppercase tracking-wide mb-4 flex items-center gap-2">
                     <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
@@ -80,13 +50,24 @@
                 </div>
             </div>
 
-            <!-- Section 2: Shipment Details & Destination -->
             <div class="p-6 border-b border-gray-100">
                 <h2 class="text-[16px] font-bold text-gray-800 uppercase tracking-wide mb-4 flex items-center gap-2">
                     <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Shipment Overview
                 </h2>
                 
+                <!-- NEW TOGGLE SWITCH -->
+                <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-5 flex justify-between items-center">
+                    <div>
+                        <p class="text-[13px] font-bold text-indigo-900">Real-time Binding</p>
+                        <p class="text-[11px] text-indigo-600 mt-0.5">If off, future events show immediately.</p>
+                    </div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" name="toggle" id="cmsIgnoreTime" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" style="transition: right 0.2s; right: 1.5rem;"/>
+                        <label for="cmsIgnoreTime" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" style="transition: background-color 0.2s;"></label>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">Overall Status</label>
@@ -118,7 +99,6 @@
                 <p class="text-[10px] text-gray-400 mt-2">* Set an Est. Arrival Date to unlock the Timeline Builder.</p>
             </div>
 
-            <!-- Section 3: Progress Timeline -->
             <div id="timelineSection" class="p-6 bg-gray-50/50 opacity-50 pointer-events-none transition-opacity duration-300">
                 <div class="flex justify-between items-center mb-2">
                     <h2 class="text-[16px] font-bold text-gray-800 uppercase tracking-wide flex items-center gap-2">
@@ -136,18 +116,12 @@
                 </button>
             </div>
 
-            <!-- Action Buttons -->
             <div class="p-6 bg-white border-t border-gray-100 flex flex-col gap-3">
-                <button id="saveBtn" onclick="saveTrackingCode()" class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-4 rounded-full shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] transition-colors text-[17px] disabled:opacity-70 disabled:cursor-not-allowed">
-                    Save New Tracking Code
-                </button>
-                <button id="cancelEditBtn" onclick="resetForm()" class="w-full hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 rounded-full transition-colors text-[17px]">
-                    Cancel Edit
-                </button>
+                <button id="saveBtn" onclick="saveTrackingCode()" class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-4 rounded-full shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] transition-colors text-[17px] disabled:opacity-70 disabled:cursor-not-allowed">Save New Tracking Code</button>
+                <button id="cancelEditBtn" onclick="resetForm()" class="w-full hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 rounded-full transition-colors text-[17px]">Cancel Edit</button>
             </div>
         </div>
 
-        <!-- Manage Database Section -->
         <div class="bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden">
             <div class="p-6 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
                 <div>
@@ -155,26 +129,15 @@
                         <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
                         Manage Database
                     </h2>
-                    <p class="text-[12px] text-gray-500 mt-1">Live data from Cloudflare D1.</p>
                 </div>
-                <!-- Loading Spinner -->
-                <div id="listLoader" class="hidden">
-                    <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                </div>
+                <div id="listLoader" class="hidden"><svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></div>
             </div>
-            
-            <div id="codesList" class="divide-y divide-gray-100 max-h-[500px] overflow-y-auto">
-                <!-- Code items will be injected here -->
-            </div>
+            <div id="codesList" class="divide-y divide-gray-100 max-h-[500px] overflow-y-auto"></div>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // ⚠️ PASTE YOUR CLOUDFLARE WORKER URL HERE ⚠️
-        // ==========================================
-        const API_URL = "https://internationalparcel-tracker.jkay99781.workers.dev/"; 
-
+        const API_URL = "YOUR_CLOUDFLARE_WORKER_URL_HERE"; 
         const EVENT_MESSAGES = ["Order Placed", "Order Shipped", "Departed Origin Facility", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance", "Out for Delivery", "Delivered, Front Door"];
         const locationData = {
             "US": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
@@ -196,22 +159,20 @@
         const destCity = document.getElementById('destCity');
         const codesListContainer = document.getElementById('codesList');
         const listLoader = document.getElementById('listLoader');
-        
         const saveBtn = document.getElementById('saveBtn');
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const generateBtn = document.getElementById('generateBtn');
+        const ignoreTimeToggle = document.getElementById('cmsIgnoreTime');
 
-        let db = {}; // Cache of the database from API
+        let db = {}; 
         let editingCode = null;
 
-        // --- Initialize ---
         function init() {
             generateCode();
             initDestinationDropdowns();
-            fetchAllCodes(); // Fetch from API on load
+            fetchAllCodes(); 
         }
 
-        // --- Fetch Data from Cloudflare API ---
         async function fetchAllCodes() {
             listLoader.classList.remove('hidden');
             codesListContainer.innerHTML = '';
@@ -219,34 +180,25 @@
                 const res = await fetch(`${API_URL}?action=list`);
                 if (res.ok) {
                     const data = await res.json();
-                    // Transform array back into an object for easier access
                     db = {};
                     data.forEach(item => {
-                        // Reconstruct the nested structure the frontend expects
                         db[item.id] = {
                             status: item.status,
+                            ignore_time: item.ignore_time,
                             destination: {
                                 location: item.dest_location,
                                 estimatedDate: item.est_date,
                                 actualDate: item.actual_date
                             },
                             events: item.events,
-                            // Raw data for editing
-                            rawEstDate: item.est_date, // approximate, might need formatting
-                            rawDest: { 
-                                country: "US", // Fallback, we reverse engineer in editCode anyway
-                                state: "California", 
-                                city: item.dest_location 
-                            }
+                            rawEstDate: item.est_date,
+                            rawDest: { country: "US", state: "California", city: item.dest_location }
                         };
                     });
                     renderCodeList();
-                } else {
-                    codesListContainer.innerHTML = `<div class="p-6 text-center text-red-500 text-[14px]">Failed to load data from API.</div>`;
                 }
             } catch (e) {
                 console.error(e);
-                codesListContainer.innerHTML = `<div class="p-6 text-center text-red-500 text-[14px]">Network error loading database.</div>`;
             } finally {
                 listLoader.classList.add('hidden');
             }
@@ -269,11 +221,9 @@
             destCity.innerHTML = locationData[country][state].sort().map(c => `<option value="${c}">${c}</option>`).join('');
         }
 
-        // --- Date Constraints ---
         function updateDateConstraints() {
             const estDateVal = estDateInput.value;
             if (!estDateVal) return;
-
             const timeInputs = document.querySelectorAll('.event-time');
             timeInputs.forEach((input, index) => {
                 input.max = `${estDateVal}T23:59`;
@@ -298,7 +248,6 @@
             }
         });
 
-        // --- Create/Edit Logic ---
         function generateCode() {
             if (editingCode) return; 
             document.getElementById('cmsCodeNumbers').value = Math.floor(100000 + Math.random() * 900000);
@@ -307,7 +256,6 @@
         function addStage(eventData = null) {
             const estDateVal = estDateInput.value;
             if (!estDateVal) return; 
-
             const rows = document.querySelectorAll('.event-row');
             const isFirstStage = rows.length === 0;
             const rowIndex = rows.length + 1;
@@ -316,40 +264,29 @@
                 const lastRow = rows[rows.length - 1];
                 const lastMessage = lastRow.querySelector('.event-message').value;
                 const lastTime = lastRow.querySelector('.event-time').value;
-                
-                if (!lastTime) { alert("Please fill in the Date & Time for the current stage before adding a new one."); return; }
-                if (lastMessage === "Delivered, Front Door") { alert("This package has already been marked as Delivered."); return; }
+                if (!lastTime) { alert("Please fill in the Date & Time for the current stage."); return; }
+                if (lastMessage === "Delivered, Front Door") { alert("Package already Delivered."); return; }
             }
 
             const div = document.createElement('div');
-            div.className = "relative bg-white p-4 rounded-xl border border-gray-200 shadow-[0_2px_10px_rgb(0,0,0,0.02)] flex flex-col gap-3 event-row";
-            
+            div.className = "relative bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col gap-3 event-row";
             let countryOptions = Object.keys(locationData).sort().map(c => `<option value="${c}">${c}</option>`).join('');
             
-            let messageFieldHTML = '';
-            if (isFirstStage) {
-                messageFieldHTML = `
-                    <div>
-                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action (Fixed)</label>
-                        <div class="front-input bg-gray-200 text-gray-600 text-[14px] py-2.5 cursor-not-allowed flex items-center">Order Placed</div>
-                        <input type="hidden" class="event-message" value="Order Placed">
-                    </div>
-                `;
-            } else {
-                let messageOptions = EVENT_MESSAGES.slice(1).map(msg => `<option value="${msg}">${msg}</option>`).join('');
-                messageFieldHTML = `
-                    <div>
-                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action</label>
-                        <select class="front-input event-message text-[14px] bg-[#f8f8f9] py-2.5">${messageOptions}</select>
-                    </div>
-                `;
-            }
+            let messageFieldHTML = isFirstStage ? `
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action (Fixed)</label>
+                    <div class="front-input bg-gray-200 text-gray-600 text-[14px] py-2.5 cursor-not-allowed flex items-center">Order Placed</div>
+                    <input type="hidden" class="event-message" value="Order Placed">
+                </div>` : `
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action</label>
+                    <select class="front-input event-message text-[14px] bg-[#f8f8f9] py-2.5">${EVENT_MESSAGES.slice(1).map(msg => `<option value="${msg}">${msg}</option>`).join('')}</select>
+                </div>`;
 
             let deleteBtnHTML = isFirstStage ? '' : `
                 <button onclick="this.closest('.event-row').remove(); updateDateConstraints();" class="text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50 rounded-full p-1.5 transition-colors" title="Remove Stage">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            `;
+                </button>`;
 
             div.innerHTML = `
                 <div class="flex justify-between items-center mb-1 pb-2 border-b border-gray-100">
@@ -376,35 +313,24 @@
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Date & Time <span class="text-red-400">*</span></label>
                         <input type="datetime-local" class="front-input event-time text-[13px] bg-[#f8f8f9] py-2.5" onchange="updateDateConstraints()">
                     </div>
-                </div>
-            `;
+                </div>`;
             eventsContainer.appendChild(div);
             
             if (eventData) {
                 if (!isFirstStage) div.querySelector('.event-message').value = eventData.message;
-                
-                // Format Date for datetime-local input (YYYY-MM-DDThh:mm)
                 const dateObj = new Date(eventData.raw_date || eventData.time);
                 if (!isNaN(dateObj)) {
                     const tzOffset = dateObj.getTimezoneOffset() * 60000;
                     const localISOTime = (new Date(dateObj - tzOffset)).toISOString().slice(0, 16);
                     div.querySelector('.event-time').value = localISOTime;
                 }
-
                 const cityString = eventData.location;
-                let foundCountry = Object.keys(locationData)[0];
-                let foundState = Object.keys(locationData[foundCountry])[0];
-                
-                for (const country in locationData) {
-                    for (const state in locationData[country]) {
-                        if (locationData[country][state].includes(cityString)) {
-                            foundCountry = country;
-                            foundState = state;
-                            break;
-                        }
+                let foundCountry = "US", foundState = "California";
+                for (const c in locationData) {
+                    for (const s in locationData[c]) {
+                        if (locationData[c][s].includes(cityString)) { foundCountry = c; foundState = s; break; }
                     }
                 }
-                
                 div.querySelector('.event-country').value = foundCountry;
                 updateStates(div.querySelector('.event-country')); 
                 div.querySelector('.event-state').value = foundState;
@@ -413,7 +339,6 @@
             } else {
                 updateStates(div.querySelector('.event-country'));
             }
-            
             updateDateConstraints();
         }
 
@@ -431,23 +356,20 @@
             citySelect.innerHTML = locationData[country][stateSelect.value].sort().map(c => `<option value="${c}">${c}</option>`).join('');
         }
 
-        // --- Save to API ---
         async function saveTrackingCode() {
             const numbers = document.getElementById('cmsCodeNumbers').value.trim();
             const estDateVal = estDateInput.value;
-            
-            if (numbers.length !== 6 || isNaN(numbers)) { alert("Please generate a valid 6-digit number."); return; }
-            if (!estDateVal) { alert("Please set an Estimated Arrival Date."); return; }
+            if (numbers.length !== 6 || isNaN(numbers)) { alert("Invalid code."); return; }
+            if (!estDateVal) { alert("Set an Estimated Arrival Date."); return; }
 
             const code = `IPS${numbers}`;
             const status = document.getElementById('cmsStatus').value;
-            
             const d = new Date(estDateVal + 'T12:00:00'); 
             const destDate = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 
             const events = [];
             const rows = document.querySelectorAll('.event-row');
-            if (rows.length === 0) { alert("Please add at least one stage."); return; }
+            if (rows.length === 0) { alert("Add at least one stage."); return; }
 
             let validationError = "";
             let previousDate = null;
@@ -456,20 +378,16 @@
                 const msg = row.querySelector('.event-message').value;
                 const loc = row.querySelector('.event-city').value;
                 const timeRaw = row.querySelector('.event-time').value;
-                
-                if (!timeRaw) validationError = `Stage ${index + 1} (${msg}) is missing a Date & Time.`;
+                if (!timeRaw) validationError = `Stage ${index + 1} missing Date & Time.`;
 
                 const eventDate = new Date(timeRaw);
                 const estDateObj = new Date(estDateVal + 'T23:59:59'); 
-
-                if (eventDate > estDateObj) validationError = `Stage ${index + 1} (${msg}) is dated after the Estimated Arrival Date.`;
-                if (previousDate && eventDate < previousDate) validationError = `Stage ${index + 1} (${msg}) cannot be dated before the previous stage.`;
+                if (eventDate > estDateObj) validationError = `Stage ${index + 1} is after the Est. Arrival.`;
+                if (previousDate && eventDate < previousDate) validationError = `Stage ${index + 1} is before the previous stage.`;
 
                 previousDate = eventDate;
-
                 const datePart = eventDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
                 const timePart = eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
-                
                 events.push({ location: loc, time: `${datePart}, ${timePart}`, message: msg, rawDate: timeRaw });
             });
 
@@ -478,6 +396,7 @@
             const newData = {
                 code: code,
                 status: status,
+                ignore_time: ignoreTimeToggle.checked, // Capture toggle state
                 destination: {
                     location: destCity.value,
                     estimatedDate: destDate,
@@ -486,7 +405,6 @@
                 events: events
             };
 
-            // Send to Cloudflare API
             saveBtn.innerText = "Saving...";
             saveBtn.disabled = true;
 
@@ -498,14 +416,14 @@
                 });
 
                 if (response.ok) {
-                    alert(`✅ Success! Code ${code} ${editingCode ? 'updated' : 'generated'} on Cloudflare.`);
+                    alert(`✅ Code ${code} ${editingCode ? 'updated' : 'generated'} on Cloudflare.`);
                     resetForm();
-                    fetchAllCodes(); // Refresh the list
+                    fetchAllCodes(); 
                 } else {
-                    alert("Failed to save to database.");
+                    alert("Failed to save.");
                 }
             } catch (error) {
-                alert("Network error while saving.");
+                alert("Network error.");
             } finally {
                 saveBtn.innerText = editingCode ? "Update Tracking Code" : "Save New Tracking Code";
                 saveBtn.disabled = false;
@@ -517,56 +435,55 @@
             document.getElementById('cmsCodeNumbers').value = '';
             eventsContainer.innerHTML = '';
             document.getElementById('cmsEstDate').value = '';
+            ignoreTimeToggle.checked = false; // Reset toggle
             timelineSection.classList.add('opacity-50', 'pointer-events-none');
             timelineHint.classList.remove('hidden');
-            
             saveBtn.innerText = "Save New Tracking Code";
             saveBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
             saveBtn.classList.add('bg-[#0d9488]', 'hover:bg-[#0f766e]');
-            
             cancelEditBtn.classList.add('hidden');
-            
             generateBtn.disabled = false;
             generateBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hover:bg-[#0f766e]');
-            
             generateCode();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- Manage Database Logic ---
         function renderCodeList() {
-            const codes = Object.keys(db); // The API already sorts them
+            const codes = Object.keys(db); 
             codesListContainer.innerHTML = '';
 
             if (codes.length === 0) {
-                codesListContainer.innerHTML = `<div class="p-6 text-center text-gray-500 text-[14px]">No custom codes found in database.</div>`;
+                codesListContainer.innerHTML = `<div class="p-6 text-center text-gray-500 text-[14px]">No custom codes found.</div>`;
                 return;
             }
 
             codes.forEach(code => {
                 const data = db[code];
                 const div = document.createElement('div');
-                div.className = "p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0";
-                
+                div.className = "p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-gray-50 border-b border-gray-100 last:border-0";
                 const isDelivered = data.status === "Delivered";
                 const badgeColor = isDelivered ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700";
+                
+                // Small indicator for time ignoring
+                const timeBadge = data.ignore_time === 1 ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 ml-2">Instant</span>` : '';
 
                 div.innerHTML = `
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <span class="font-bold text-[16px] text-gray-900">${code}</span>
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeColor}">${data.status}</span>
+                            ${timeBadge}
                         </div>
                         <p class="text-[12px] text-gray-500">To: ${data.destination.location}</p>
                     </div>
                     <div class="flex gap-2 w-full sm:w-auto">
-                        <button onclick="copyCode('${code}')" class="flex-1 sm:flex-none text-indigo-600 bg-indigo-50 hover:bg-indigo-100 p-2 rounded-lg transition-colors" title="Copy Code">
+                        <button onclick="copyCode('${code}')" class="flex-1 sm:flex-none text-indigo-600 bg-indigo-50 hover:bg-indigo-100 p-2 rounded-lg transition-colors" title="Copy">
                             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         </button>
-                        <button onclick="editCode('${code}')" class="flex-1 sm:flex-none text-teal-600 bg-teal-50 hover:bg-teal-100 p-2 rounded-lg transition-colors" title="Edit Code">
+                        <button onclick="editCode('${code}')" class="flex-1 sm:flex-none text-teal-600 bg-teal-50 hover:bg-teal-100 p-2 rounded-lg transition-colors" title="Edit">
                             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         </button>
-                        <button onclick="deleteCode('${code}')" class="flex-1 sm:flex-none text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Delete Code">
+                        <button onclick="deleteCode('${code}')" class="flex-1 sm:flex-none text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Delete">
                             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         </button>
                     </div>
@@ -576,25 +493,19 @@
         }
 
         function copyCode(code) {
-            navigator.clipboard.writeText(code).then(() => {
-                alert(`📋 Copied ${code} to clipboard!`);
-            });
+            navigator.clipboard.writeText(code).then(() => alert(`📋 Copied ${code}!`));
         }
 
         async function deleteCode(code) {
-            if (confirm(`Are you sure you want to permanently delete ${code}?\n\nThis will remove it from the Cloudflare database. Customers will no longer be able to track this code.`)) {
+            if (confirm(`Delete ${code} permanently from database?`)) {
                 try {
                     const res = await fetch(`${API_URL}?code=${code}`, { method: 'DELETE' });
                     if (res.ok) {
                         delete db[code];
                         renderCodeList();
                         if (editingCode === code) resetForm(); 
-                    } else {
-                        alert("Failed to delete from database.");
                     }
-                } catch (e) {
-                    alert("Network error while deleting.");
-                }
+                } catch (e) { alert("Error deleting."); }
             }
         }
 
@@ -606,36 +517,25 @@
             saveBtn.classList.remove('bg-[#0d9488]', 'hover:bg-[#0f766e]');
             saveBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
             cancelEditBtn.classList.remove('hidden');
-            
             generateBtn.disabled = true;
             generateBtn.classList.add('opacity-50', 'cursor-not-allowed', 'hover:bg-[#0d9488]'); 
             
             document.getElementById('cmsCodeNumbers').value = code.replace('IPS', '');
             document.getElementById('cmsStatus').value = data.status;
+            ignoreTimeToggle.checked = data.ignore_time === 1; // Load toggle state
             
-            // Reverse engineer the Est date from string (e.g. "Nov 13, 2024") back to YYYY-MM-DD
-            // Note: This relies on the format we created. It's safer to store rawEstDate in DB, but for now we'll try to parse it.
             let estDateRaw = data.destination.estimatedDate;
             if (estDateRaw && estDateRaw !== "TBD") {
                 const parts = estDateRaw.replace(',', '').split(' ');
                 const monthMap = {Jan:"01", Feb:"02", Mar:"03", Apr:"04", May:"05", Jun:"06", Jul:"07", Aug:"08", Sep:"09", Oct:"10", Nov:"11", Dec:"12"};
-                if (parts.length === 3) {
-                    const isoString = `${parts[2]}-${monthMap[parts[0]]}-${parts[1].padStart(2, '0')}`;
-                    document.getElementById('cmsEstDate').value = isoString;
-                }
+                if (parts.length === 3) document.getElementById('cmsEstDate').value = `${parts[2]}-${monthMap[parts[0]]}-${parts[1].padStart(2, '0')}`;
             }
 
-            // Try to find the destination in the nested dropdowns
             const destLoc = data.destination.location;
-            let foundCountry = "US";
-            let foundState = "California";
-            for (const country in locationData) {
-                for (const state in locationData[country]) {
-                    if (locationData[country][state].includes(destLoc)) {
-                        foundCountry = country;
-                        foundState = state;
-                        break;
-                    }
+            let foundCountry = "US", foundState = "California";
+            for (const c in locationData) {
+                for (const s in locationData[c]) {
+                    if (locationData[c][s].includes(destLoc)) { foundCountry = c; foundState = s; break; }
                 }
             }
             destCountry.value = foundCountry;
@@ -648,15 +548,8 @@
             timelineHint.classList.add('hidden');
             eventsContainer.innerHTML = '';
 
-            // Rebuild timeline
             data.events.forEach(event => {
-                // We pass a slightly modified object because DB returns raw_date as string, time as formatted string
-                addStage({
-                    location: event.location,
-                    message: event.message,
-                    time: event.time,
-                    raw_date: event.raw_date
-                });
+                addStage({ location: event.location, message: event.message, time: event.time, raw_date: event.raw_date });
             });
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
