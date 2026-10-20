@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O.G CMS - International Parcel Service</title>
-    <!-- Favicon (IPS Shield) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z' fill='black'/><path d='M12 3L5 6v5c0 4.42 3.05 8.57 7 9.63 3.95-1.06 7-5.21 7-9.63V6l-7-3z' fill='%23facc15'/><text x='12' y='15' font-size='8' font-weight='bold' text-anchor='middle' fill='black'>ips</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -256,9 +254,8 @@
             "Order Placed", "Order Shipped", "Label Created", "Picked Up by Carrier", "Departed Origin Facility", "Arrived at Origin Hub", "Departed Origin Hub", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance Started", "Held at Customs", "Customs Released", "In Transit to Next Facility", "Arrived at Local Facility", "Out for Delivery", "Delivery Attempted", "Delivered, Front Door", "Returned to Sender"
         ];
 
-        // Changed "US" to "United States"
         const locationData = {
-            "United States": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
+            "US": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
             "United Kingdom": { "England": ["London, England", "Birmingham, England", "Manchester, England", "Leeds, England", "Liverpool, England", "Sheffield, England", "Bristol, England", "Newcastle, England", "Nottingham, England", "Leicester, England", "Southampton, England", "Portsmouth, England", "Coventry, England", "Bradford, England", "Sunderland, England", "Salford, England"], "Scotland": ["Edinburgh, Scotland", "Glasgow, Scotland", "Aberdeen, Scotland", "Dundee, Scotland"], "Wales": ["Cardiff, Wales", "Swansea, Wales", "Newport, Wales"], "Northern Ireland": ["Belfast, Northern Ireland", "Derry, Northern Ireland"] },
             "Ireland": { "Leinster": ["Dublin, Ireland"], "Munster": ["Cork, Ireland", "Shannon, Ireland"] },
             "Netherlands": { "North Holland": ["Amsterdam, Netherlands"], "South Holland": ["Rotterdam, Netherlands", "The Hague, Netherlands"], "North Brabant": ["Eindhoven, Netherlands"] },
@@ -315,7 +312,7 @@
                             destination: { location: item.dest_location, estimatedDate: item.est_date, actualDate: item.actual_date },
                             events: item.events,
                             rawEstDate: item.est_date,
-                            rawDest: { country: "United States", state: "California", city: item.dest_location }
+                            rawDest: { country: "US", state: "California", city: item.dest_location }
                         };
                     });
                     renderCodeList();
@@ -378,7 +375,6 @@
             document.getElementById('cmsCodeNumbers').value = Math.floor(100000 + Math.random() * 900000);
         }
 
-        // Updated to remove the fixed "Order Placed" logic
         function addStage(eventData = null) {
             const estDateVal = estDateInput.value;
             if (!estDateVal) return; 
@@ -400,17 +396,26 @@
             
             let countryOptions = Object.keys(locationData).sort().map(c => `<option value="${c}">${c}</option>`).join('');
             
-            // Always show the dropdown
-            let messageOptions = EVENT_MESSAGES.map(msg => `<option value="${msg}">${msg}</option>`).join('');
-            let messageFieldHTML = `
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action</label>
-                    <select class="front-input event-message text-[14px] bg-[#f8f8f9] py-2.5">${messageOptions}</select>
-                </div>
-            `;
+            let messageFieldHTML = '';
+            if (isFirstStage) {
+                messageFieldHTML = `
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action (Fixed)</label>
+                        <div class="front-input bg-gray-200 text-gray-600 text-[14px] py-2.5 cursor-not-allowed flex items-center">Order Placed</div>
+                        <input type="hidden" class="event-message" value="Order Placed">
+                    </div>
+                `;
+            } else {
+                let messageOptions = EVENT_MESSAGES.slice(1).map(msg => `<option value="${msg}">${msg}</option>`).join('');
+                messageFieldHTML = `
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action</label>
+                        <select class="front-input event-message text-[14px] bg-[#f8f8f9] py-2.5">${messageOptions}</select>
+                    </div>
+                `;
+            }
 
-            // Always show the delete button
-            let deleteBtnHTML = `
+            let deleteBtnHTML = isFirstStage ? '' : `
                 <button onclick="this.closest('.event-row').remove(); updateDateConstraints();" class="text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50 rounded-full p-1.5 transition-colors" title="Remove Stage">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -446,7 +451,7 @@
             eventsContainer.appendChild(div);
             
             if (eventData) {
-                div.querySelector('.event-message').value = eventData.message;
+                if (!isFirstStage) div.querySelector('.event-message').value = eventData.message;
                 const dateObj = new Date(eventData.raw_date || eventData.time);
                 if (!isNaN(dateObj)) {
                     const tzOffset = dateObj.getTimezoneOffset() * 60000;
@@ -665,8 +670,7 @@
             }
 
             const destLoc = data.destination.location;
-            // Changed default fallback to "United States"
-            let foundCountry = "United States", foundState = "California";
+            let foundCountry = "US", foundState = "California";
             for (const country in locationData) {
                 for (const state in locationData[country]) {
                     if (locationData[country][state].includes(destLoc)) { foundCountry = country; foundState = state; break; }
