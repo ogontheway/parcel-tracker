@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>International Parcel Service</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -12,46 +14,90 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         #dragHandle { touch-action: none; cursor: grab; }
         #dragHandle:active { cursor: grabbing; }
-        .pulse-bg { animation: pulseBg 2s infinite; }
-        @keyframes pulseBg { 0% { transform: scale(1); opacity: 0.75; } 50% { transform: scale(1.5); opacity: 0; } 100% { transform: scale(1); opacity: 0; } }
+        
+        /* Ensure placeholder is not forced to uppercase by browser defaults */
+        input::placeholder { text-transform: none; }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col px-4 relative">
 
+    <!-- Main Content Wrapper -->
     <main class="flex-1 flex flex-col items-center justify-center w-full max-w-[420px] mx-auto pt-10 sm:pt-0">
         
+        <!-- Header -->
         <div class="flex flex-col items-center justify-center mb-6">
             <div class="relative w-16 h-16 flex items-center justify-center mb-1">
-                <svg class="absolute inset-0 w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-                <svg class="absolute inset-[2px] w-[calc(100%-4px)] h-[calc(100%-4px)] text-yellow-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L5 6v5c0 4.42 3.05 8.57 7 9.63 3.95-1.06 7-5.21 7-9.63V6l-7-3z"/></svg>
+                <svg class="absolute inset-0 w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                </svg>
+                <svg class="absolute inset-[2px] w-[calc(100%-4px)] h-[calc(100%-4px)] text-yellow-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3L5 6v5c0 4.42 3.05 8.57 7 9.63 3.95-1.06 7-5.21 7-9.63V6l-7-3z"/>
+                </svg>
                 <span class="relative z-10 font-bold text-black text-xl tracking-tighter">ips</span>
             </div>
             <h1 class="text-[15px] font-semibold text-gray-800">International Parcel Service</h1>
         </div>
 
+        <!-- Tracking Card -->
         <div id="searchCard" class="bg-white w-full rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-6 sm:p-8 flex flex-col items-center text-center">
+            
             <h2 class="text-[19px] font-bold text-gray-900 mb-6 uppercase tracking-wide">Pending Delivery</h2>
             
+            <!-- Box Graphic -->
             <div class="relative mb-6">
                 <svg class="w-24 h-24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 30 L50 15 L80 30 L50 45 Z" fill="#d4a373"/><path d="M20 30 L50 45 L50 85 L20 70 Z" fill="#b5835a"/><path d="M80 30 L50 45 L50 85 L80 70 Z" fill="#e0b185"/><path d="M35 22.5 L65 37.5 L65 45 L50 52.5 L35 45 Z" fill="#fefae0" opacity="0.6"/><path d="M45 42.5 L55 47.5 L55 75 L45 70 Z" fill="#fefae0" opacity="0.6"/><rect x="40" y="55" width="20" height="15" fill="#fefae0" opacity="0.8"/>
+                    <path d="M20 30 L50 15 L80 30 L50 45 Z" fill="#d4a373"/>
+                    <path d="M20 30 L50 45 L50 85 L20 70 Z" fill="#b5835a"/>
+                    <path d="M80 30 L50 45 L50 85 L80 70 Z" fill="#e0b185"/>
+                    <path d="M35 22.5 L65 37.5 L65 45 L50 52.5 L35 45 Z" fill="#fefae0" opacity="0.6"/>
+                    <path d="M45 42.5 L55 47.5 L55 75 L45 70 Z" fill="#fefae0" opacity="0.6"/>
+                    <rect x="40" y="55" width="20" height="15" fill="#fefae0" opacity="0.8"/>
                 </svg>
+                
+                <!-- Pending Clock Icon -->
                 <div class="absolute top-0 right-0 bg-amber-500 rounded-full p-1 border-2 border-white shadow-sm">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                 </div>
             </div>
 
-            <p class="text-[14.5px] text-gray-800 leading-snug mb-6 px-2">You have a pending delivery. Use your unique tracking code to track and receive your item.</p>
+            <p class="text-[14.5px] text-gray-800 leading-snug mb-6 px-2">
+                If you have a pending delivery. Use your unique tracking code to track and receive your item.
+            </p>
+
             <div class="w-full border-t border-gray-200 mb-6"></div>
 
             <form id="trackingForm" class="w-full" onsubmit="handleTrack(event)">
                 <label class="block text-gray-900 font-medium mb-3 text-[15px]">Your tracking code</label>
-                <input type="text" id="trackingInput" placeholder="e.g. IPS3408021" class="w-full bg-[#f4f4f5] text-center text-[20px] sm:text-[22px] font-bold text-amber-600 placeholder-gray-400 py-3.5 rounded-md mb-6 outline-none focus:ring-2 focus:ring-amber-500/50 transition-shadow uppercase" required>
-                <button type="submit" id="trackBtn" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(245,158,11,0.4)] disabled:opacity-70 disabled:cursor-not-allowed">Track your item</button>
+                
+                <!-- 
+                    Removed 'uppercase' class so placeholder renders naturally.
+                    Added maxlength="9" (IPS + 6 numbers).
+                    Added oninput to strip symbols/spaces and force uppercase. 
+                -->
+                <input 
+                    type="text" 
+                    id="trackingInput" 
+                    placeholder="e.g. IPS3408021"
+                    maxlength="9"
+                    oninput="formatTrackingInput(this)"
+                    class="w-full bg-[#f4f4f5] text-center text-[20px] sm:text-[22px] font-bold text-[#0f766e] placeholder-gray-400 py-3.5 rounded-md mb-6 outline-none focus:ring-2 focus:ring-[#0f766e]/50 transition-shadow"
+                    required
+                >
+                
+                <button 
+                    type="submit"
+                    id="trackBtn"
+                    class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-3.5 sm:py-4 rounded-full transition-colors text-[16px] sm:text-[17px] shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                    Track your item
+                </button>
             </form>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="w-full text-center py-6 mt-auto">
         <p class="text-[12px] text-gray-400 font-medium">&copy; <span id="currentYear"></span>. All rights reserved.</p>
     </footer>
@@ -67,22 +113,15 @@
             
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-[22px] font-bold text-gray-900">Delivery progress</h2>
-                <div class="flex items-center gap-2">
-                    <span id="liveBadge" class="hidden text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full items-center gap-1">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                        </span>
-                        Live
-                    </span>
-                    <button onclick="closeTimeline()" class="hidden sm:block text-gray-400 hover:text-gray-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
+                <button onclick="closeTimeline()" class="hidden sm:block text-gray-400 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
 
             <div class="flex-1 overflow-y-auto no-scrollbar pb-6 relative">
-                <div class="border-l-2 border-indigo-200 ml-3 space-y-7 relative" id="timelineEvents"></div>
+                <div class="border-l-2 border-indigo-200 ml-3 space-y-7 relative" id="timelineEvents">
+                    <!-- JS will inject events and destination here -->
+                </div>
             </div>
 
             <div class="pt-4 border-t border-gray-100">
@@ -94,91 +133,77 @@
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-        // ⚠️ YOUR WORKER URL HERE
+        // ==========================================
+        // ⚠️ PASTE YOUR CLOUDFLARE WORKER URL HERE ⚠️
+        // ==========================================
         const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
 
         const timelineView = document.getElementById('timelineView');
         const timelineSheet = document.getElementById('timelineSheet');
         const trackBtn = document.getElementById('trackBtn');
         const originalBtnText = trackBtn.innerText;
-        const liveBadge = document.getElementById('liveBadge');
 
-        let activeCode = null;
-        let pollTimer = null;
-        let lastEventCount = 0;
+        // --- NEW: Input Restriction Function ---
+        function formatTrackingInput(input) {
+            // 1. Convert to uppercase
+            let val = input.value.toUpperCase();
+            
+            // 2. Strip out anything that is not A-Z or 0-9 (removes symbols and spaces instantly)
+            val = val.replace(/[^A-Z0-9]/g, '');
+            
+            // 3. Update the input field with the clean value
+            input.value = val;
+        }
 
+        // Handle Form Submission with API Fetch
         async function handleTrack(event) {
             event.preventDefault(); 
             const code = document.getElementById('trackingInput').value.trim().toUpperCase();
             
+            // Set Loading State
             trackBtn.innerText = "Tracking...";
             trackBtn.disabled = true;
 
             try {
+                // Fetch data from Cloudflare Worker
                 const response = await fetch(`${API_URL}?code=${code}`);
+                
                 if (response.ok) {
                     const data = await response.json();
                     
+                    // Format the data from the Database structure to our UI structure
+                    const currentTime = new Date();
+                    
+                    // Only show events that have passed OR are explicitly marked completed in DB
+                    const visibleEvents = data.events.filter(e => {
+                        return e.completed === 1 || new Date(e.raw_date) <= currentTime;
+                    });
+
                     const shipmentData = {
                         status: data.shipment.status,
-                        destination: { location: data.shipment.dest_location, estimatedDate: data.shipment.est_date, actualDate: data.shipment.actual_date },
-                        events: data.events
+                        destination: {
+                            location: data.shipment.dest_location,
+                            estimatedDate: data.shipment.est_date,
+                            actualDate: data.shipment.actual_date
+                        },
+                        events: visibleEvents
                     };
 
-                    lastEventCount = data.events.length;
                     renderTimeline(shipmentData);
-                    
-                    // Start Live Polling
-                    activeCode = code;
-                    if(pollTimer) clearInterval(pollTimer);
-                    liveBadge.classList.remove('hidden');
-                    liveBadge.classList.add('flex');
-                    pollTimer = setInterval(pollUpdates, 30000); // Checks every 30 seconds
-
                 } else {
                     alert("Tracking code not found. Please check the code and try again.");
                 }
             } catch (error) {
+                console.error("API Error:", error);
                 alert("Network error. Please check your internet connection.");
             } finally {
+                // Reset Button State
                 trackBtn.innerText = originalBtnText;
                 trackBtn.disabled = false;
             }
         }
 
-        async function pollUpdates() {
-            if (!activeCode) return;
-            try {
-                const res = await fetch(`${API_URL}?code=${activeCode}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    
-                    const shipmentData = {
-                        status: data.shipment.status,
-                        destination: { location: data.shipment.dest_location, estimatedDate: data.shipment.est_date, actualDate: data.shipment.actual_date },
-                        events: data.events
-                    };
-
-                    // Check if new events arrived or if DB status changed
-                    const isDeliveredInEvents = data.events.some(e => e.message.includes("Delivered"));
-                    const isDelivered = data.shipment.status === "Delivered" || isDeliveredInEvents;
-                    
-                    if (isDelivered) {
-                        shipmentData.status = "Delivered"; // Instant Green Override
-                        shipmentData.destination.actualDate = data.events[data.events.length - 1].time;
-                    }
-
-                    if (data.events.length > lastEventCount || isDelivered) {
-                        lastEventCount = data.events.length;
-                        renderTimeline(shipmentData, true); // true = isUpdate (skip animation)
-                    }
-                }
-            } catch (e) {
-                console.log("Polling error", e);
-            }
-        }
-
-        function renderTimeline(data, isUpdate = false) {
+        function renderTimeline(data) {
             const container = document.getElementById('timelineEvents');
             container.innerHTML = ''; 
             const events = data.events;
@@ -191,8 +216,8 @@
                     let dotHTML = '';
                     
                     if (isLatest) {
-                        const blipperColor = data.status === "Delivered" ? "bg-emerald-500" : "bg-amber-500";
-                        const centerDotColor = data.status === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.8)]";
+                        const blipperColor = data.status === "Delivered" ? "bg-emerald-500" : "bg-indigo-500";
+                        const centerDotColor = data.status === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.8)]";
                         
                         dotHTML = `
                             <div class="absolute -left-[9px] top-1 w-4 h-4">
@@ -201,7 +226,7 @@
                             </div>
                         `;
                     } else {
-                        const dotColor = data.status === "Delivered" ? "bg-emerald-600" : "bg-amber-500";
+                        const dotColor = data.status === "Delivered" ? "bg-emerald-600" : "bg-indigo-600";
                         dotHTML = `<div class="absolute -left-[9px] top-1 w-4 h-4 ${dotColor} rounded-full border-4 border-white z-10"></div>`;
                     }
                     
@@ -216,17 +241,18 @@
                 });
             }
 
+            // Render Destination Card
             if (data.destination) {
                 const isDelivered = data.status === "Delivered";
-                const lineClass = isDelivered ? "border-solid border-emerald-300" : "border-dashed border-amber-300";
-                const pinBg = isDelivered ? "bg-emerald-100 border-emerald-500" : "bg-amber-100 border-amber-500";
-                const cardBg = isDelivered ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-100";
-                const titleColor = isDelivered ? "text-emerald-600" : "text-amber-600";
-                const dateColor = isDelivered ? "text-emerald-700" : "text-amber-700";
+                const lineClass = isDelivered ? "border-solid border-emerald-300" : "border-dashed border-indigo-300";
+                const pinBg = isDelivered ? "bg-emerald-100 border-emerald-500" : "bg-indigo-100 border-indigo-500";
+                const cardBg = isDelivered ? "bg-emerald-50 border-emerald-200" : "bg-indigo-50 border-indigo-100";
+                const titleColor = isDelivered ? "text-emerald-600" : "text-indigo-500";
+                const dateColor = isDelivered ? "text-emerald-700" : "text-indigo-700";
                 
                 const iconHTML = isDelivered 
                     ? `<svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`
-                    : `<svg class="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>`;
+                    : `<svg class="w-3.5 h-3.5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>`;
 
                 const titleText = isDelivered ? 'Delivery Complete' : 'Final Destination';
                 const dateText = isDelivered ? `Delivered: ${data.destination.actualDate}` : `Est. Arrival: ${data.destination.estimatedDate}`;
@@ -250,23 +276,17 @@
                 container.appendChild(destNode);
             }
 
-            if (!isUpdate) {
-                timelineSheet.style.transform = '';
-                timelineSheet.style.transition = '';
-                timelineView.classList.remove('hidden');
-                setTimeout(() => {
-                    timelineSheet.classList.remove('translate-y-full', 'sm:translate-y-8', 'sm:opacity-0');
-                    timelineSheet.classList.add('translate-y-0', 'sm:opacity-100');
-                }, 10);
-            }
+            timelineSheet.style.transform = '';
+            timelineSheet.style.transition = '';
+            timelineView.classList.remove('hidden');
+            
+            setTimeout(() => {
+                timelineSheet.classList.remove('translate-y-full', 'sm:translate-y-8', 'sm:opacity-0');
+                timelineSheet.classList.add('translate-y-0', 'sm:opacity-100');
+            }, 10);
         }
 
         function closeTimeline() {
-            if(pollTimer) clearInterval(pollTimer);
-            activeCode = null;
-            liveBadge.classList.add('hidden');
-            liveBadge.classList.remove('flex');
-
             timelineSheet.style.transform = '';
             timelineSheet.style.transition = '';
             timelineSheet.classList.remove('translate-y-0', 'sm:opacity-100');
@@ -277,18 +297,21 @@
         // Drag to Dismiss Logic
         const dragHandle = document.getElementById('dragHandle');
         let startY = 0, currentY = 0, isDragging = false;
+
         dragHandle.addEventListener('pointerdown', (e) => {
             if (window.innerWidth >= 640) return;
             startY = e.clientY;
             isDragging = true;
             timelineSheet.style.transition = 'none';
         });
+
         window.addEventListener('pointermove', (e) => {
             if (!isDragging) return;
             currentY = e.clientY;
             let deltaY = currentY - startY;
             if (deltaY > 0) timelineSheet.style.transform = `translateY(${deltaY}px)`;
         });
+
         window.addEventListener('pointerup', () => {
             if (!isDragging) return;
             isDragging = false;
