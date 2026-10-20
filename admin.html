@@ -24,7 +24,24 @@
 </head>
 <body class="min-h-screen py-8 px-4 flex flex-col items-center">
 
-    <!-- 🔒 LOGIN SCREEN -->
+    <!-- Native Toast Notification -->
+    <div id="customToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 transition-all duration-300 translate-y-[-150%] opacity-0 pointer-events-none">
+        <span id="toastMessage" class="font-medium text-sm">Message</span>
+    </div>
+
+    <!-- Native Confirm Modal -->
+    <div id="customConfirm" class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Confirm Action</h3>
+            <p id="confirmMessage" class="text-gray-600 text-sm mb-6">Are you sure?</p>
+            <div class="flex gap-3">
+                <button onclick="resolveConfirm(false)" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-xl transition-colors">Cancel</button>
+                <button onclick="resolveConfirm(true)" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl shadow-md transition-colors">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
     <div id="loginScreen" class="fixed inset-0 bg-gray-100 z-50 flex items-center justify-center px-4">
         <div class="bg-white p-8 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-[400px] text-center">
             <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -41,7 +58,7 @@
         </div>
     </div>
 
-    <!-- MAIN CMS CONTENT (Hidden by default) -->
+    <!-- MAIN CMS CONTENT -->
     <div id="mainContent" class="hidden w-full max-w-[480px]">
         <div class="flex justify-between items-center mb-6 px-2">
             <div class="flex items-center gap-3">
@@ -164,19 +181,53 @@
     </div>
 
     <script>
-        // ==========================================
-        // 🔒 SET YOUR PASSWORD HERE
-        // ==========================================
         const ADMIN_PASSWORD = "admin123"; 
         const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
 
+        // --- Native Toast & Confirm Logic ---
+        let toastTimeout;
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('customToast');
+            const msg = document.getElementById('toastMessage');
+            msg.innerText = message;
+            
+            if (type === 'error') {
+                toast.classList.remove('bg-gray-900');
+                toast.classList.add('bg-red-600');
+            } else {
+                toast.classList.remove('bg-red-600');
+                toast.classList.add('bg-gray-900');
+            }
+            
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 3500);
+        }
+
+        let confirmResolver = null;
+        function showConfirm(message) {
+            return new Promise((resolve) => {
+                confirmResolver = resolve;
+                document.getElementById('confirmMessage').innerText = message;
+                document.getElementById('customConfirm').classList.remove('hidden');
+            });
+        }
+        function resolveConfirm(value) {
+            document.getElementById('customConfirm').classList.add('hidden');
+            if (confirmResolver) confirmResolver(value);
+        }
+
         // --- AUTHENTICATION LOGIC ---
         function checkAuth() {
-            // Check if the user already logged in during this browser session
             if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('mainContent').classList.remove('hidden');
-                init(); // Load the CMS data only if logged in
+                init(); 
             }
         }
 
@@ -199,10 +250,9 @@
             window.location.reload();
         }
 
-        // Check auth on page load
         checkAuth();
 
-        // --- CMS LOGIC (Unchanged) ---
+        // --- CMS LOGIC ---
         const EVENT_MESSAGES = [
             "Order Placed", "Order Shipped", "Label Created", "Picked Up by Carrier", "Departed Origin Facility", "Arrived at Origin Hub", "Departed Origin Hub", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance Started", "Held at Customs", "Customs Released", "In Transit to Next Facility", "Arrived at Local Facility", "Out for Delivery", "Delivery Attempted", "Delivered, Front Door", "Returned to Sender"
         ];
@@ -340,8 +390,8 @@
                 const lastRow = rows[rows.length - 1];
                 const lastMessage = lastRow.querySelector('.event-message').value;
                 const lastTime = lastRow.querySelector('.event-time').value;
-                if (!lastTime) { alert("Please fill in the Date & Time for the current stage before adding a new one."); return; }
-                if (lastMessage.includes("Delivered") || lastMessage === "Returned to Sender") { alert("This package journey is complete."); return; }
+                if (!lastTime) { showToast("Please fill in the Date & Time for the current stage before adding a new one.", "error"); return; }
+                if (lastMessage.includes("Delivered") || lastMessage === "Returned to Sender") { showToast("This package journey is complete.", "error"); return; }
             }
 
             const div = document.createElement('div');
@@ -453,8 +503,8 @@
             const estDateVal = estDateInput.value;
             const timezoneOffset = cmsTimezone.value;
 
-            if (numbers.length !== 6 || isNaN(numbers)) { alert("Please generate a valid 6-digit number."); return; }
-            if (!estDateVal) { alert("Please set an Estimated Arrival Date."); return; }
+            if (numbers.length !== 6 || isNaN(numbers)) { showToast("Please generate a valid 6-digit number.", "error"); return; }
+            if (!estDateVal) { showToast("Please set an Estimated Arrival Date.", "error"); return; }
 
             const code = `IPS${numbers}`;
             const d = new Date(estDateVal + 'T12:00:00'); 
@@ -462,7 +512,7 @@
 
             const events = [];
             const rows = document.querySelectorAll('.event-row');
-            if (rows.length === 0) { alert("Please add at least one stage."); return; }
+            if (rows.length === 0) { showToast("Please add at least one stage.", "error"); return; }
 
             let validationError = "";
             let previousDate = null;
@@ -493,7 +543,7 @@
                 events.push({ location: loc, time: `${datePart}, ${timePart}`, message: msg, rawDate: rawDateWithTz });
             });
 
-            if (validationError) { alert(validationError); return; }
+            if (validationError) { showToast(validationError, "error"); return; }
 
             const newData = {
                 code: code,
@@ -516,14 +566,14 @@
                     body: JSON.stringify(newData)
                 });
                 if (response.ok) {
-                    alert(`Success! Code ${code} ${editingCode ? 'updated' : 'generated'} on Cloudflare.`);
+                    showToast(`Success! Code ${code} ${editingCode ? 'updated' : 'generated'}.`, "success");
                     resetForm();
                     fetchAllCodes(); 
                 } else {
-                    alert("Failed to save to database.");
+                    showToast("Failed to save to database.", "error");
                 }
             } catch (error) {
-                alert("Network error while saving.");
+                showToast("Network error while saving.", "error");
             } finally {
                 saveBtn.innerText = editingCode ? "Update Tracking Code" : "Save New Tracking Code";
                 saveBtn.disabled = false;
@@ -587,16 +637,17 @@
         }
 
         function copyCode(code) {
-            navigator.clipboard.writeText(code).then(() => { alert(`Copied ${code} to clipboard.`); });
+            navigator.clipboard.writeText(code).then(() => { showToast(`Copied ${code} to clipboard.`, "success"); });
         }
 
         async function deleteCode(code) {
-            if (confirm(`Are you sure you want to permanently delete ${code}?`)) {
+            const confirmed = await showConfirm(`Are you sure you want to permanently delete ${code}?`);
+            if (confirmed) {
                 try {
                     const res = await fetch(`${API_URL}?code=${code}`, { method: 'DELETE' });
                     if (res.ok) { delete db[code]; renderCodeList(); if (editingCode === code) resetForm(); }
-                    else { alert("Failed to delete."); }
-                } catch (e) { alert("Network error."); }
+                    else { showToast("Failed to delete.", "error"); }
+                } catch (e) { showToast("Network error.", "error"); }
             }
         }
 
