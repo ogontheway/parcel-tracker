@@ -85,7 +85,8 @@
             </div>
 
             <div class="flex-1 overflow-y-auto no-scrollbar pb-6 relative">
-                <div class="border-l-2 border-indigo-200 ml-3 space-y-7 relative" id="timelineEvents"></div>
+                <!-- The vertical line container - Color will be updated dynamically in JS -->
+                <div class="border-l-2 border-amber-200 ml-3 space-y-7 relative" id="timelineEvents"></div>
             </div>
 
             <div class="pt-4 border-t border-gray-100">
@@ -107,6 +108,7 @@
         const trackBtn = document.getElementById('trackBtn');
         const originalBtnText = trackBtn.innerText;
         const liveBadge = document.getElementById('liveBadge');
+        const timelineContainer = document.getElementById('timelineEvents');
 
         let activeCode = null;
         let pollTimer = null;
@@ -217,20 +219,25 @@
         }
 
         function renderTimeline(data, isUpdate = false) {
-            const container = document.getElementById('timelineEvents');
-            container.innerHTML = ''; 
+            const isDelivered = data.status === "Delivered";
+            
+            // --- FIX: Dynamically change the vertical line color ---
+            const lineColorClass = isDelivered ? "border-emerald-200" : "border-amber-200";
+            timelineContainer.className = `border-l-2 ${lineColorClass} ml-3 space-y-7 relative`;
+            
+            timelineContainer.innerHTML = ''; 
             const events = data.events;
 
             if (!events || events.length === 0) {
-                container.innerHTML = `<div class="text-gray-500 text-sm pl-6">No tracking updates available yet.</div>`;
+                timelineContainer.innerHTML = `<div class="text-gray-500 text-sm pl-6">No tracking updates available yet.</div>`;
             } else {
                 events.forEach((event, index) => {
                     const isLatest = index === events.length - 1;
                     let dotHTML = '';
                     
                     if (isLatest) {
-                        const blipperColor = data.status === "Delivered" ? "bg-emerald-500" : "bg-amber-500";
-                        const centerDotColor = data.status === "Delivered" ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.8)]";
+                        const blipperColor = isDelivered ? "bg-emerald-500" : "bg-amber-500";
+                        const centerDotColor = isDelivered ? "bg-emerald-600 shadow-[0_0_10px_rgba(5,150,105,0.8)]" : "bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.8)]";
                         
                         dotHTML = `
                             <div class="absolute -left-[9px] top-1 w-4 h-4">
@@ -239,7 +246,7 @@
                             </div>
                         `;
                     } else {
-                        const dotColor = data.status === "Delivered" ? "bg-emerald-600" : "bg-amber-500";
+                        const dotColor = isDelivered ? "bg-emerald-600" : "bg-amber-500";
                         dotHTML = `<div class="absolute -left-[9px] top-1 w-4 h-4 ${dotColor} rounded-full border-4 border-white z-10"></div>`;
                     }
                     
@@ -250,12 +257,11 @@
                         <p class="text-[12px] text-gray-500 mb-0.5">${event.location} · ${event.time}</p>
                         <p class="font-semibold text-gray-900 text-[14.5px] leading-tight">${event.message}</p>
                     `;
-                    container.appendChild(node);
+                    timelineContainer.appendChild(node);
                 });
             }
 
             if (data.destination) {
-                const isDelivered = data.status === "Delivered";
                 const lineClass = isDelivered ? "border-solid border-emerald-300" : "border-dashed border-amber-300";
                 const pinBg = isDelivered ? "bg-emerald-100 border-emerald-500" : "bg-amber-100 border-amber-500";
                 const cardBg = isDelivered ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-100";
@@ -285,7 +291,7 @@
                         </p>
                     </div>
                 `;
-                container.appendChild(destNode);
+                timelineContainer.appendChild(destNode);
             }
 
             if (!isUpdate) {
