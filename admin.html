@@ -8,20 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .front-input { width: 100%; background-color: #f4f4f5; border-radius: 0.5rem; padding: 0.85rem 1rem; font-size: 1rem; font-weight: 700; color: #1f2937; outline: none; border: 2px solid transparent; transition: all 0.2s; }
-        .front-input:focus { border-color: #0d9488; background-color: #ffffff; }
-        select.front-input { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230f766e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em; padding-right: 2.5rem; cursor: pointer; }
+        .front-input {
+            width: 100%; background-color: #f4f4f5; border-radius: 0.5rem; padding: 0.85rem 1rem; font-size: 1rem; font-weight: 700; color: #1f2937; outline: none; border: 2px solid transparent; transition: all 0.2s;
+        }
+        .front-input:focus { border-color: #f59e0b; background-color: #ffffff; }
+        select.front-input {
+            appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d97706' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em; padding-right: 2.5rem; cursor: pointer;
+        }
         select.front-input option { background-color: #ffffff; color: #1f2937; font-weight: 500; padding: 10px; }
         input[type="datetime-local"], input[type="date"] { appearance: none; -webkit-appearance: none; }
         .event-row { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Toggle Switch CSS */
-        .toggle-checkbox:checked { right: 0; border-color: #0d9488; }
-        .toggle-checkbox:checked + .toggle-label { background-color: #0d9488; }
     </style>
 </head>
 <body class="min-h-screen py-8 px-4 flex flex-col items-center">
+
     <div class="w-full max-w-[480px]">
         <div class="flex justify-between items-center mb-6 px-2">
             <div class="flex items-center gap-3">
@@ -36,15 +38,16 @@
         </div>
 
         <div id="mainFormCard" class="bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden mb-8">
+            
             <div class="p-6 border-b border-gray-100">
                 <h2 class="text-[16px] font-bold text-gray-800 uppercase tracking-wide mb-4 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
                     Generate Tracking Code
                 </h2>
                 <div class="flex items-center gap-2">
                     <div class="bg-[#f4f4f5] rounded-l-md px-4 py-3.5 font-bold text-gray-500 text-[20px] flex items-center justify-center border-2 border-transparent">IPS</div>
-                    <input type="text" id="cmsCodeNumbers" placeholder="000000" maxlength="6" class="front-input text-center text-[20px] text-[#0f766e] uppercase rounded-l-none rounded-r-md py-3.5" readonly>
-                    <button id="generateBtn" onclick="generateCode()" class="bg-[#0d9488] hover:bg-[#0f766e] text-white p-3.5 rounded-md shadow-md transition-all" title="Generate Random Code">
+                    <input type="text" id="cmsCodeNumbers" placeholder="000000" maxlength="6" class="front-input text-center text-[20px] text-amber-600 uppercase rounded-l-none rounded-r-md py-3.5" readonly>
+                    <button id="generateBtn" onclick="generateCode()" class="bg-amber-500 hover:bg-amber-600 text-white p-3.5 rounded-md shadow-md transition-all" title="Generate Random Code">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     </button>
                 </div>
@@ -52,22 +55,10 @@
 
             <div class="p-6 border-b border-gray-100">
                 <h2 class="text-[16px] font-bold text-gray-800 uppercase tracking-wide mb-4 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Shipment Overview
                 </h2>
                 
-                <!-- NEW TOGGLE SWITCH -->
-                <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-5 flex justify-between items-center">
-                    <div>
-                        <p class="text-[13px] font-bold text-indigo-900">Real-time Binding</p>
-                        <p class="text-[11px] text-indigo-600 mt-0.5">If off, future events show immediately.</p>
-                    </div>
-                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-                        <input type="checkbox" name="toggle" id="cmsIgnoreTime" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" style="transition: right 0.2s; right: 1.5rem;"/>
-                        <label for="cmsIgnoreTime" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" style="transition: background-color 0.2s;"></label>
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">Overall Status</label>
@@ -102,7 +93,7 @@
             <div id="timelineSection" class="p-6 bg-gray-50/50 opacity-50 pointer-events-none transition-opacity duration-300">
                 <div class="flex justify-between items-center mb-2">
                     <h2 class="text-[16px] font-bold text-gray-800 uppercase tracking-wide flex items-center gap-2">
-                        <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                         Timeline Builder
                     </h2>
                 </div>
@@ -110,15 +101,19 @@
                 
                 <div id="eventsContainer" class="space-y-4"></div>
 
-                <button onclick="addStage()" class="w-full mt-4 bg-white border-2 border-dashed border-gray-300 hover:border-teal-500 hover:text-teal-600 text-gray-600 font-bold py-3 rounded-xl text-[14px] transition-colors flex items-center justify-center gap-2">
+                <button onclick="addStage()" class="w-full mt-4 bg-white border-2 border-dashed border-gray-300 hover:border-amber-500 hover:text-amber-600 text-gray-600 font-bold py-3 rounded-xl text-[14px] transition-colors flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                     Add Next Stage
                 </button>
             </div>
 
             <div class="p-6 bg-white border-t border-gray-100 flex flex-col gap-3">
-                <button id="saveBtn" onclick="saveTrackingCode()" class="w-full bg-[#0d9488] hover:bg-[#0f766e] text-white font-bold py-4 rounded-full shadow-[0_4px_14px_0_rgba(13,148,136,0.39)] transition-colors text-[17px] disabled:opacity-70 disabled:cursor-not-allowed">Save New Tracking Code</button>
-                <button id="cancelEditBtn" onclick="resetForm()" class="w-full hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 rounded-full transition-colors text-[17px]">Cancel Edit</button>
+                <button id="saveBtn" onclick="saveTrackingCode()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-full shadow-[0_4px_14px_0_rgba(245,158,11,0.4)] transition-colors text-[17px] disabled:opacity-70 disabled:cursor-not-allowed">
+                    Save New Tracking Code
+                </button>
+                <button id="cancelEditBtn" onclick="resetForm()" class="w-full hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 rounded-full transition-colors text-[17px]">
+                    Cancel Edit
+                </button>
             </div>
         </div>
 
@@ -130,7 +125,9 @@
                         Manage Database
                     </h2>
                 </div>
-                <div id="listLoader" class="hidden"><svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></div>
+                <div id="listLoader" class="hidden">
+                    <svg class="animate-spin h-5 w-5 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                </div>
             </div>
             <div id="codesList" class="divide-y divide-gray-100 max-h-[500px] overflow-y-auto"></div>
         </div>
@@ -138,6 +135,7 @@
 
     <script>
         const API_URL = "https://ipstracker.jkay99781.workers.dev/"; 
+
         const EVENT_MESSAGES = ["Order Placed", "Order Shipped", "Departed Origin Facility", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance", "Out for Delivery", "Delivered, Front Door"];
         const locationData = {
             "US": { "Alabama": ["Birmingham, AL", "Montgomery, AL"], "Alaska": ["Anchorage, AK"], "Arizona": ["Phoenix, AZ", "Tucson, AZ"], "Arkansas": ["Little Rock, AR"], "California": ["Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"], "Colorado": ["Denver, CO", "Colorado Springs, CO"], "Connecticut": ["Hartford, CT", "New Haven, CT"], "Delaware": ["Wilmington, DE"], "Florida": ["Miami, FL", "Orlando, FL", "Tampa, FL", "Jacksonville, FL"], "Georgia": ["Atlanta, GA", "Savannah, GA"], "Hawaii": ["Honolulu, HI"], "Idaho": ["Boise, ID"], "Illinois": ["Chicago, IL", "Springfield, IL"], "Indiana": ["Indianapolis, IN"], "Iowa": ["Des Moines, IA"], "Kansas": ["Wichita, KS"], "Kentucky": ["Louisville, KY", "Lexington, KY"], "Louisiana": ["New Orleans, LA", "Baton Rouge, LA"], "Maine": ["Portland, ME"], "Maryland": ["Baltimore, MD"], "Massachusetts": ["Boston, MA", "Worcester, MA"], "Michigan": ["Detroit, MI", "Grand Rapids, MI"], "Minnesota": ["Minneapolis, MN", "St. Paul, MN"], "Mississippi": ["Jackson, MS"], "Missouri": ["Kansas City, MO", "St. Louis, MO"], "Montana": ["Billings, MT"], "Nebraska": ["Omaha, NE"], "Nevada": ["Las Vegas, NV", "Reno, NV"], "New Hampshire": ["Manchester, NH"], "New Jersey": ["Newark, NJ", "Jersey City, NJ"], "New Mexico": ["Albuquerque, NM"], "New York": ["New York, NY", "Buffalo, NY", "Albany, NY"], "North Carolina": ["Charlotte, NC", "Raleigh, NC"], "North Dakota": ["Fargo, ND"], "Ohio": ["Columbus, OH", "Cleveland, OH", "Cincinnati, OH"], "Oklahoma": ["Oklahoma City, OK", "Tulsa, OK"], "Oregon": ["Portland, OR", "Salem, OR"], "Pennsylvania": ["Philadelphia, PA", "Pittsburgh, PA"], "Rhode Island": ["Providence, RI"], "South Carolina": ["Charleston, SC", "Columbia, SC"], "South Dakota": ["Sioux Falls, SD"], "Tennessee": ["Memphis, TN", "Nashville, TN", "Knoxville, TN"], "Texas": ["Houston, TX", "Dallas, TX", "Austin, TX", "San Antonio, TX"], "Utah": ["Salt Lake City, UT"], "Vermont": ["Burlington, VT"], "Virginia": ["Virginia Beach, VA", "Richmond, VA"], "Washington": ["Seattle, WA", "Spokane, WA"], "West Virginia": ["Charleston, WV"], "Wisconsin": ["Milwaukee, WI", "Madison, WI"], "Wyoming": ["Cheyenne, WY"] },
@@ -159,10 +157,10 @@
         const destCity = document.getElementById('destCity');
         const codesListContainer = document.getElementById('codesList');
         const listLoader = document.getElementById('listLoader');
+        
         const saveBtn = document.getElementById('saveBtn');
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const generateBtn = document.getElementById('generateBtn');
-        const ignoreTimeToggle = document.getElementById('cmsIgnoreTime');
 
         let db = {}; 
         let editingCode = null;
@@ -184,21 +182,18 @@
                     data.forEach(item => {
                         db[item.id] = {
                             status: item.status,
-                            ignore_time: item.ignore_time,
-                            destination: {
-                                location: item.dest_location,
-                                estimatedDate: item.est_date,
-                                actualDate: item.actual_date
-                            },
+                            destination: { location: item.dest_location, estimatedDate: item.est_date, actualDate: item.actual_date },
                             events: item.events,
                             rawEstDate: item.est_date,
                             rawDest: { country: "US", state: "California", city: item.dest_location }
                         };
                     });
                     renderCodeList();
+                } else {
+                    codesListContainer.innerHTML = `<div class="p-6 text-center text-red-500 text-[14px]">Failed to load data.</div>`;
                 }
             } catch (e) {
-                console.error(e);
+                codesListContainer.innerHTML = `<div class="p-6 text-center text-red-500 text-[14px]">Network error.</div>`;
             } finally {
                 listLoader.classList.add('hidden');
             }
@@ -256,6 +251,7 @@
         function addStage(eventData = null) {
             const estDateVal = estDateInput.value;
             if (!estDateVal) return; 
+
             const rows = document.querySelectorAll('.event-row');
             const isFirstStage = rows.length === 0;
             const rowIndex = rows.length + 1;
@@ -264,29 +260,39 @@
                 const lastRow = rows[rows.length - 1];
                 const lastMessage = lastRow.querySelector('.event-message').value;
                 const lastTime = lastRow.querySelector('.event-time').value;
-                if (!lastTime) { alert("Please fill in the Date & Time for the current stage."); return; }
-                if (lastMessage === "Delivered, Front Door") { alert("Package already Delivered."); return; }
+                if (!lastTime) { alert("Please fill in the Date & Time for the current stage before adding a new one."); return; }
+                if (lastMessage === "Delivered, Front Door") { alert("This package has already been marked as Delivered."); return; }
             }
 
             const div = document.createElement('div');
-            div.className = "relative bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col gap-3 event-row";
+            div.className = "relative bg-white p-4 rounded-xl border border-gray-200 shadow-[0_2px_10px_rgb(0,0,0,0.02)] flex flex-col gap-3 event-row";
+            
             let countryOptions = Object.keys(locationData).sort().map(c => `<option value="${c}">${c}</option>`).join('');
             
-            let messageFieldHTML = isFirstStage ? `
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action (Fixed)</label>
-                    <div class="front-input bg-gray-200 text-gray-600 text-[14px] py-2.5 cursor-not-allowed flex items-center">Order Placed</div>
-                    <input type="hidden" class="event-message" value="Order Placed">
-                </div>` : `
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action</label>
-                    <select class="front-input event-message text-[14px] bg-[#f8f8f9] py-2.5">${EVENT_MESSAGES.slice(1).map(msg => `<option value="${msg}">${msg}</option>`).join('')}</select>
-                </div>`;
+            let messageFieldHTML = '';
+            if (isFirstStage) {
+                messageFieldHTML = `
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action (Fixed)</label>
+                        <div class="front-input bg-gray-200 text-gray-600 text-[14px] py-2.5 cursor-not-allowed flex items-center">Order Placed</div>
+                        <input type="hidden" class="event-message" value="Order Placed">
+                    </div>
+                `;
+            } else {
+                let messageOptions = EVENT_MESSAGES.slice(1).map(msg => `<option value="${msg}">${msg}</option>`).join('');
+                messageFieldHTML = `
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Stage Action</label>
+                        <select class="front-input event-message text-[14px] bg-[#f8f8f9] py-2.5">${messageOptions}</select>
+                    </div>
+                `;
+            }
 
             let deleteBtnHTML = isFirstStage ? '' : `
                 <button onclick="this.closest('.event-row').remove(); updateDateConstraints();" class="text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50 rounded-full p-1.5 transition-colors" title="Remove Stage">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>`;
+                </button>
+            `;
 
             div.innerHTML = `
                 <div class="flex justify-between items-center mb-1 pb-2 border-b border-gray-100">
@@ -313,7 +319,8 @@
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Date & Time <span class="text-red-400">*</span></label>
                         <input type="datetime-local" class="front-input event-time text-[13px] bg-[#f8f8f9] py-2.5" onchange="updateDateConstraints()">
                     </div>
-                </div>`;
+                </div>
+            `;
             eventsContainer.appendChild(div);
             
             if (eventData) {
@@ -325,10 +332,15 @@
                     div.querySelector('.event-time').value = localISOTime;
                 }
                 const cityString = eventData.location;
-                let foundCountry = "US", foundState = "California";
-                for (const c in locationData) {
-                    for (const s in locationData[c]) {
-                        if (locationData[c][s].includes(cityString)) { foundCountry = c; foundState = s; break; }
+                let foundCountry = Object.keys(locationData)[0];
+                let foundState = Object.keys(locationData[foundCountry])[0];
+                for (const country in locationData) {
+                    for (const state in locationData[country]) {
+                        if (locationData[country][state].includes(cityString)) {
+                            foundCountry = country;
+                            foundState = state;
+                            break;
+                        }
                     }
                 }
                 div.querySelector('.event-country').value = foundCountry;
@@ -359,8 +371,8 @@
         async function saveTrackingCode() {
             const numbers = document.getElementById('cmsCodeNumbers').value.trim();
             const estDateVal = estDateInput.value;
-            if (numbers.length !== 6 || isNaN(numbers)) { alert("Invalid code."); return; }
-            if (!estDateVal) { alert("Set an Estimated Arrival Date."); return; }
+            if (numbers.length !== 6 || isNaN(numbers)) { alert("Please generate a valid 6-digit number."); return; }
+            if (!estDateVal) { alert("Please set an Estimated Arrival Date."); return; }
 
             const code = `IPS${numbers}`;
             const status = document.getElementById('cmsStatus').value;
@@ -369,7 +381,7 @@
 
             const events = [];
             const rows = document.querySelectorAll('.event-row');
-            if (rows.length === 0) { alert("Add at least one stage."); return; }
+            if (rows.length === 0) { alert("Please add at least one stage."); return; }
 
             let validationError = "";
             let previousDate = null;
@@ -378,14 +390,14 @@
                 const msg = row.querySelector('.event-message').value;
                 const loc = row.querySelector('.event-city').value;
                 const timeRaw = row.querySelector('.event-time').value;
-                if (!timeRaw) validationError = `Stage ${index + 1} missing Date & Time.`;
-
+                
+                if (!timeRaw) validationError = `Stage ${index + 1} (${msg}) is missing a Date & Time.`;
                 const eventDate = new Date(timeRaw);
                 const estDateObj = new Date(estDateVal + 'T23:59:59'); 
-                if (eventDate > estDateObj) validationError = `Stage ${index + 1} is after the Est. Arrival.`;
-                if (previousDate && eventDate < previousDate) validationError = `Stage ${index + 1} is before the previous stage.`;
-
+                if (eventDate > estDateObj) validationError = `Stage ${index + 1} (${msg}) is dated after the Estimated Arrival Date.`;
+                if (previousDate && eventDate < previousDate) validationError = `Stage ${index + 1} (${msg}) cannot be dated before the previous stage.`;
                 previousDate = eventDate;
+
                 const datePart = eventDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
                 const timePart = eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
                 events.push({ location: loc, time: `${datePart}, ${timePart}`, message: msg, rawDate: timeRaw });
@@ -396,12 +408,7 @@
             const newData = {
                 code: code,
                 status: status,
-                ignore_time: ignoreTimeToggle.checked, // Capture toggle state
-                destination: {
-                    location: destCity.value,
-                    estimatedDate: destDate,
-                    actualDate: status === "Delivered" ? events[events.length - 1].time : null
-                },
+                destination: { location: destCity.value, estimatedDate: destDate, actualDate: status === "Delivered" ? events[events.length - 1].time : null },
                 events: events
             };
 
@@ -414,16 +421,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newData)
                 });
-
                 if (response.ok) {
-                    alert(`✅ Code ${code} ${editingCode ? 'updated' : 'generated'} on Cloudflare.`);
+                    alert(`✅ Success! Code ${code} ${editingCode ? 'updated' : 'generated'} on Cloudflare.`);
                     resetForm();
                     fetchAllCodes(); 
                 } else {
-                    alert("Failed to save.");
+                    alert("Failed to save to database.");
                 }
             } catch (error) {
-                alert("Network error.");
+                alert("Network error while saving.");
             } finally {
                 saveBtn.innerText = editingCode ? "Update Tracking Code" : "Save New Tracking Code";
                 saveBtn.disabled = false;
@@ -435,15 +441,14 @@
             document.getElementById('cmsCodeNumbers').value = '';
             eventsContainer.innerHTML = '';
             document.getElementById('cmsEstDate').value = '';
-            ignoreTimeToggle.checked = false; // Reset toggle
             timelineSection.classList.add('opacity-50', 'pointer-events-none');
             timelineHint.classList.remove('hidden');
             saveBtn.innerText = "Save New Tracking Code";
             saveBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-            saveBtn.classList.add('bg-[#0d9488]', 'hover:bg-[#0f766e]');
+            saveBtn.classList.add('bg-amber-500', 'hover:bg-amber-600');
             cancelEditBtn.classList.add('hidden');
             generateBtn.disabled = false;
-            generateBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hover:bg-[#0f766e]');
+            generateBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hover:bg-amber-600');
             generateCode();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -451,7 +456,6 @@
         function renderCodeList() {
             const codes = Object.keys(db); 
             codesListContainer.innerHTML = '';
-
             if (codes.length === 0) {
                 codesListContainer.innerHTML = `<div class="p-6 text-center text-gray-500 text-[14px]">No custom codes found.</div>`;
                 return;
@@ -460,30 +464,25 @@
             codes.forEach(code => {
                 const data = db[code];
                 const div = document.createElement('div');
-                div.className = "p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-gray-50 border-b border-gray-100 last:border-0";
+                div.className = "p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0";
                 const isDelivered = data.status === "Delivered";
                 const badgeColor = isDelivered ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700";
-                
-                // Small indicator for time ignoring
-                const timeBadge = data.ignore_time === 1 ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 ml-2">Instant</span>` : '';
-
                 div.innerHTML = `
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <span class="font-bold text-[16px] text-gray-900">${code}</span>
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeColor}">${data.status}</span>
-                            ${timeBadge}
                         </div>
                         <p class="text-[12px] text-gray-500">To: ${data.destination.location}</p>
                     </div>
                     <div class="flex gap-2 w-full sm:w-auto">
-                        <button onclick="copyCode('${code}')" class="flex-1 sm:flex-none text-indigo-600 bg-indigo-50 hover:bg-indigo-100 p-2 rounded-lg transition-colors" title="Copy">
+                        <button onclick="copyCode('${code}')" class="flex-1 sm:flex-none text-indigo-600 bg-indigo-50 hover:bg-indigo-100 p-2 rounded-lg transition-colors" title="Copy Code">
                             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         </button>
-                        <button onclick="editCode('${code}')" class="flex-1 sm:flex-none text-teal-600 bg-teal-50 hover:bg-teal-100 p-2 rounded-lg transition-colors" title="Edit">
+                        <button onclick="editCode('${code}')" class="flex-1 sm:flex-none text-amber-600 bg-amber-50 hover:bg-amber-100 p-2 rounded-lg transition-colors" title="Edit Code">
                             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         </button>
-                        <button onclick="deleteCode('${code}')" class="flex-1 sm:flex-none text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Delete">
+                        <button onclick="deleteCode('${code}')" class="flex-1 sm:flex-none text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Delete Code">
                             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         </button>
                     </div>
@@ -493,49 +492,46 @@
         }
 
         function copyCode(code) {
-            navigator.clipboard.writeText(code).then(() => alert(`📋 Copied ${code}!`));
+            navigator.clipboard.writeText(code).then(() => { alert(`📋 Copied ${code} to clipboard!`); });
         }
 
         async function deleteCode(code) {
-            if (confirm(`Delete ${code} permanently from database?`)) {
+            if (confirm(`Are you sure you want to permanently delete ${code}?`)) {
                 try {
                     const res = await fetch(`${API_URL}?code=${code}`, { method: 'DELETE' });
-                    if (res.ok) {
-                        delete db[code];
-                        renderCodeList();
-                        if (editingCode === code) resetForm(); 
-                    }
-                } catch (e) { alert("Error deleting."); }
+                    if (res.ok) { delete db[code]; renderCodeList(); if (editingCode === code) resetForm(); }
+                    else { alert("Failed to delete."); }
+                } catch (e) { alert("Network error."); }
             }
         }
 
         function editCode(code) {
             const data = db[code];
             editingCode = code;
-            
             saveBtn.innerText = "Update Tracking Code";
-            saveBtn.classList.remove('bg-[#0d9488]', 'hover:bg-[#0f766e]');
+            saveBtn.classList.remove('bg-amber-500', 'hover:bg-amber-600');
             saveBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
             cancelEditBtn.classList.remove('hidden');
             generateBtn.disabled = true;
-            generateBtn.classList.add('opacity-50', 'cursor-not-allowed', 'hover:bg-[#0d9488]'); 
+            generateBtn.classList.add('opacity-50', 'cursor-not-allowed', 'hover:bg-amber-500'); 
             
             document.getElementById('cmsCodeNumbers').value = code.replace('IPS', '');
             document.getElementById('cmsStatus').value = data.status;
-            ignoreTimeToggle.checked = data.ignore_time === 1; // Load toggle state
             
             let estDateRaw = data.destination.estimatedDate;
             if (estDateRaw && estDateRaw !== "TBD") {
                 const parts = estDateRaw.replace(',', '').split(' ');
                 const monthMap = {Jan:"01", Feb:"02", Mar:"03", Apr:"04", May:"05", Jun:"06", Jul:"07", Aug:"08", Sep:"09", Oct:"10", Nov:"11", Dec:"12"};
-                if (parts.length === 3) document.getElementById('cmsEstDate').value = `${parts[2]}-${monthMap[parts[0]]}-${parts[1].padStart(2, '0')}`;
+                if (parts.length === 3) {
+                    document.getElementById('cmsEstDate').value = `${parts[2]}-${monthMap[parts[0]]}-${parts[1].padStart(2, '0')}`;
+                }
             }
 
             const destLoc = data.destination.location;
             let foundCountry = "US", foundState = "California";
-            for (const c in locationData) {
-                for (const s in locationData[c]) {
-                    if (locationData[c][s].includes(destLoc)) { foundCountry = c; foundState = s; break; }
+            for (const country in locationData) {
+                for (const state in locationData[country]) {
+                    if (locationData[country][state].includes(destLoc)) { foundCountry = country; foundState = state; break; }
                 }
             }
             destCountry.value = foundCountry;
