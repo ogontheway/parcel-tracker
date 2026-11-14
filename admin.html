@@ -252,8 +252,31 @@
 
         checkAuth();
 
+        // ADDED THE NEW STAGES HERE
         const EVENT_MESSAGES = [
-            "Order Placed", "Order Shipped", "Label Created", "Picked Up by Carrier", "Departed Origin Facility", "Arrived at Origin Hub", "Departed Origin Hub", "Arrived at Sorting Center", "Departed Sorting Center", "Arrived at Regional Hub", "Departed Regional Hub", "Customs Clearance Started", "Held at Customs", "Customs Released", "In Transit to Next Facility", "Arrived at Local Facility", "Out for Delivery", "Delivery Attempted", "Delivered, Front Door", "Returned to Sender"
+            "Order Placed", 
+            "Order Shipped", 
+            "Label Created", 
+            "Picked Up by Carrier", 
+            "Departed Origin Facility", 
+            "Arrived at Origin Hub", 
+            "Departed Origin Hub", 
+            "Arrived at Sorting Center", 
+            "Departed Sorting Center", 
+            "Arrived at Regional Hub", 
+            "Departed Regional Hub", 
+            "Held at Customs", 
+            "Customs Clearance Started", 
+            "Import Customs Clearance Started",          // NEW
+            "Awaiting Duty / Tax Payment",     // NEW
+            "Special Release Fee Pending",     // NEW
+            "Customs Released", 
+            "In Transit to Next Facility", 
+            "Arrived at Local Facility", 
+            "Out for Delivery", 
+            "Delivery Attempted", 
+            "Delivered, Front Door", 
+            "Returned to Sender"
         ];
 
         const locationData = {
@@ -444,21 +467,17 @@
             if (eventData) {
                 div.querySelector('.event-message').value = eventData.message;
                 
-                // FIX: Extract the exact datetime text from the raw string to prevent timezone shifting
                 if (eventData.raw_date) {
                     let localDateTime = eventData.raw_date;
-                    // Remove timezone offset (e.g., -05:00, +02:00, Z)
                     const tzMatch = localDateTime.match(/(Z|[+-]\d{2}:\d{2})$/);
                     if (tzMatch) {
                         localDateTime = localDateTime.substring(0, localDateTime.length - tzMatch[1].length);
                     }
-                    // Strip seconds if present (e.g., "2024-11-15T14:00:00" -> "2024-11-15T14:00")
                     if (localDateTime.length > 16) {
                         localDateTime = localDateTime.substring(0, 16);
                     }
                     div.querySelector('.event-time').value = localDateTime;
                 } else {
-                    // Fallback for legacy data without raw_date
                     const dateObj = new Date(eventData.time);
                     if (!isNaN(dateObj)) {
                         const tzOffset = dateObj.getTimezoneOffset() * 60000;
@@ -678,7 +697,6 @@
                 }
             }
 
-            // Set the global timezone based on the first event's raw_date offset
             if (data.events.length > 0) {
                 const firstRaw = data.events[0].raw_date;
                 if (firstRaw) {
