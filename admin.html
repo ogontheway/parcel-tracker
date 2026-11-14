@@ -252,7 +252,7 @@
 
         checkAuth();
 
-        // ADDED THE NEW STAGES HERE
+        // UPDATED WITH NEW IMPORT CUSTOMS & PORT OF ENTRY STAGES
         const EVENT_MESSAGES = [
             "Order Placed", 
             "Order Shipped", 
@@ -265,12 +265,15 @@
             "Departed Sorting Center", 
             "Arrived at Regional Hub", 
             "Departed Regional Hub", 
-            "Held at Customs", 
+            "Arrived at Port of Entry",               // NEW
+            "Presented to Import Customs",            // NEW
+            "Import Customs Clearance Started",       // NEW
+            "Awaiting Duty / Tax Payment",            // NEW
+            "Special Release Fee Pending",            // NEW
             "Customs Clearance Started", 
-            "Import Customs Clearance Started",          // NEW
-            "Awaiting Duty / Tax Payment",     // NEW
-            "Special Release Fee Pending",     // NEW
+            "Held at Customs", 
             "Customs Released", 
+            "Departed Port of Entry",                 // NEW
             "In Transit to Next Facility", 
             "Arrived at Local Facility", 
             "Out for Delivery", 
